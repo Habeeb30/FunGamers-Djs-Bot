@@ -1,0 +1,28 @@
+{
+  "name": "fungamers-discord-bot",
+  "version": "2.6.0",
+  "engines": {
+    "npm": ">=8.14.0",
+    "node": ">=16.16.0"
+  },
+  "description": "This Discord Bot For FG Discord Server",
+  "main": "index.js",
+  "scripts": {
+    "bot": "node ."
+  },
+  "author": "Habeeb M",
+  "license": "ISC",
+  "dependencies": {
+    "ascii-table": "^0.0.9",
+    "axios": "^0.27.2",
+    "chalk": "^4.1.2",
+    "discord-giveaways": "^6.0.1",
+    "discord-html-transcripts": "^2.6.1",
+    "discord.js": "^14.0.3",
+    "dotenv": "^16.0.1",
+    "eslint": "^8.21.0",
+    "glob": "^8.0.3",
+    "mongoose": "^6.5.2",
+    "randomized-string": "^1.2.6"
+  }
+}
