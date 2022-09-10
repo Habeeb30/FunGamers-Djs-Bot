@@ -30,10 +30,20 @@ module.exports = {
           const channel = interaction.options.getChannel("channel");
 
           const embed = new EmbedBuilder()
+            .setThumbnail(
+              "https://emoji.discord.st/emojis/5045414d-7cd4-4024-ac6b-809e920fcf9d.gif"
+            )
             .setDescription(
               "Welcome to the server! Please authorize yourself by clicking the button below! When you verify you will be granted the 'verified' role"
             )
             .setColor("Navy")
+            .setImage(
+              "https://verif-y.com/wp-content/uploads/2020/07/Verif-y-logo.png"
+            )
+            .setFooter({
+              text: "The System by FunGamers",
+              iconURL: "https://i.ibb.co/mXCPq1J/My-FG-Logo.jpg",
+            })
             .setTitle(`Welcome to ${interaction.guild.name}!`);
 
           const button = new ActionRowBuilder().setComponents(
