@@ -14,6 +14,7 @@ module.exports = {
       option
         .setName("channel")
         .setDescription("Channel to send the verification message to.")
+        .setRequired(true)
         .addChannelTypes(ChannelType.GuildText)
     ),
 

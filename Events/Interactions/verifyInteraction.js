@@ -36,13 +36,14 @@ module.exports = {
             .setDescription(
               "Welcome to the server! Please authorize yourself by clicking the button below! When you verify you will be granted the 'verified' role"
             )
-            .setColor("Navy")
+            .setColor("fcd303")
             .setImage(
               "https://verif-y.com/wp-content/uploads/2020/07/Verif-y-logo.png"
             )
             .setFooter({
               text: "The System by FunGamers",
-              iconURL: "https://i.ibb.co/mXCPq1J/My-FG-Logo.jpg",
+              iconURL:
+                "https://images-ext-1.discordapp.net/external/7zIa8B9n45knyj9tq5LWfjMSr2qjJFLezMseGZu5tos/https/emoji.discord.st/emojis/96586e0c-0d0c-4915-bab4-c5e9cd3fdec3.gif",
             })
             .setTitle(`Welcome to ${interaction.guild.name}!`);
 
@@ -50,7 +51,7 @@ module.exports = {
             new ButtonBuilder()
               .setCustomId("verifyMember")
               .setLabel("Verify")
-              .setStyle(ButtonStyle.Primary)
+              .setStyle(ButtonStyle.Success)
               .setEmoji("<:dev_yes:999673591341797416>")
           );
 
