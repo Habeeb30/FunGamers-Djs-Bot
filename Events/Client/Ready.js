@@ -28,7 +28,7 @@ module.exports = {
     // }
 
     client.user.setPresence({
-      activities: [{ name: "FunGamers videos", type: ActivityType.Watching }],
+      activities: [{ name: "/help", type: ActivityType.Listening }],
       status: "dnd",
     });
 
