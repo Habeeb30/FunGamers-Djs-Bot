@@ -44,11 +44,17 @@ module.exports = {
       client.channels.cache
         .get(joinChannel.channelId)
         .send({
+          content: `<@${user.id}>`,
           embeds: [
             new EmbedBuilder()
-              .setTitle(`New Member Join!`)
+              .setTitle(`ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ **${interaction.guild.name}**!`)
               .setDescription(
-                `Welcome <@${user.id}> to ${interaction.guild.name}! We hope you enjoy your stay!`
+                `Welcome <@${user.id}> to ${interaction.guild.name}! We hope you enjoy your stay!\n
+                **ʀᴇᴀᴅ ᴏᴜʀ ʀᴜʟᴇꜱ**\n
+                **ᴋɪɴᴅʟy ʙᴇ ʀᴇꜱᴩᴇᴄᴛꜰᴜʟ ʜᴇʀᴇ**\n
+                **ʜᴀᴠᴇ ꜰᴜɴ ᴡɪᴛʜ ꜱᴇʀᴠᴇʀᴍᴀᴛᴇꜱ**\n
+                **ʜᴀᴠᴇ ᴀ ɢʀᴇᴀᴛ ᴛɪᴍᴇ ʜᴇʀᴇ**\n
+                Your Position At Discord Server is **${interaction.guild.memberCount}**`
               )
               .addFields(
                 {
