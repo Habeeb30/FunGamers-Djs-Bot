@@ -17,13 +17,16 @@ const client = new Client({
 
 const { loadEvents } = require("./Handlers/eventHandler");
 const { loadButtons } = require("./Handlers/buttonHandler");
+const { loadModals } = require("./Handlers/modalHandler");
 
 client.events = new Collection();
 client.commands = new Collection();
 client.buttons = new Collection();
+client.modals = new Collection();
 // client.selectMenus = new Collection();
 
 loadEvents(client);
+loadModals(client);
 loadButtons(client);
 
 require("./Handlers/antiCrash")(client);
