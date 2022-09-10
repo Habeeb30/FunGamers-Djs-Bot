@@ -5,7 +5,7 @@
     "npm": ">=8.14.0",
     "node": ">=16.16.0"
   },
-  "description": "This Discord Bot For FG Discord Server",
+  "description": "A multi functional Discord Bot For FG Discord Server",
   "main": "index.js",
   "scripts": {
     "bot": "node ."
