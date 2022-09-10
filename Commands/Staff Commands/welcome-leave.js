@@ -7,13 +7,17 @@ const {
 } = require("discord.js");
 const leaveSchema = require("../../Schemas/leaveSchema");
 const joinSchema = require("../../Schemas/joinSchema");
-const mongoose = require("mongoose");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("events")
-    .setDescription("Welcome command setup")
+    .setName("event")
+    .setDescription("Welcome/leave command setup")
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("disable")
+        .setDescription("disable and delete the data on this guild")
+    )
     .addSubcommand((subcommand) =>
       subcommand
         .setName("leave")
@@ -23,12 +27,6 @@ module.exports = {
             .setName("channel")
             .setDescription("Channel to send the leave message to.")
             .addChannelTypes(ChannelType.GuildText)
-            .setRequired(true)
-        )
-        .addBooleanOption((option) =>
-          option
-            .setName("enable")
-            .setDescription("Enable leave messages")
             .setRequired(true)
         )
     )
@@ -43,12 +41,6 @@ module.exports = {
             .addChannelTypes(ChannelType.GuildText)
             .setRequired(true)
         )
-        .addBooleanOption((option) =>
-          option
-            .setName("enable")
-            .setDescription("Enable welcome messages")
-            .setRequired(true)
-        )
     ),
   /**
    * @param {ChatInputCommandInteraction} interaction
@@ -61,26 +53,21 @@ module.exports = {
       case "leave":
         {
           if (interaction.options.getSubcommand() === "leave") {
-            const enableLeaveMsg = interaction.options.getBoolean("enable");
             const channel = interaction.options.getChannel("channel");
             const leaveSys = await leaveSchema.findOne({
               guildId: interaction.guild.id,
             });
 
             if (!leaveSys) {
-              leaveChannel = await new leaveSchema({
-                _id: mongoose.Types.ObjectId(),
+              leaveChannel = new leaveSchema({
                 guildId: interaction.guild.id,
                 channelId: channel.id,
-                messageEnable: enableLeaveMsg,
               });
 
               await leaveChannel.save().catch((err) => console.log(err));
               const successEmbed = new EmbedBuilder()
-                .setDescription(
-                  `Leave messages have now been enabled in **${channel.name}**!`
-                )
-                .setColor("Green");
+                .setDescription(`Enabled leave message in **${channel.name}**!`)
+                .setColor("Red");
               await interaction.reply({
                 embeds: [successEmbed],
                 ephemeral: true,
@@ -93,9 +80,9 @@ module.exports = {
               );
               const successEmbed = new EmbedBuilder()
                 .setDescription(
-                  `Leave messages have been updated to **${channel.name}**!`
+                  `Updated leave messages to **${channel.name}**!`
                 )
-                .setColor("Green");
+                .setColor("Red");
 
               await interaction.reply({
                 embeds: [successEmbed],
@@ -108,27 +95,23 @@ module.exports = {
       case "welcome":
         {
           if (interaction.options.getSubcommand() === "welcome") {
-            const enableWelcomeMsg = interaction.options.getBoolean("enable");
             const channel = interaction.options.getChannel("channel");
             const joinSys = await joinSchema.findOne({
               guildId: interaction.guild.id,
             });
 
             if (!joinSys) {
-              joinChannel = await new joinSchema({
-                _id: mongoose.Types.ObjectId(),
+              joinChannel = new joinSchema({
                 guildId: interaction.guild.id,
                 channelId: channel.id,
-                messageEnable: enableWelcomeMsg,
               });
 
               await joinChannel.save().catch((err) => console.log(err));
               const successEmbed = new EmbedBuilder()
                 .setDescription(
-                  `Welcome messages are now enabled in **${channel.name}**!`
+                  `Enabled welcome message in **${channel.name}**!`
                 )
-                .setColor("Green")
-                .setTimestamp();
+                .setColor("Green");
               await interaction.reply({
                 embeds: [successEmbed],
                 ephemeral: true,
@@ -141,16 +124,35 @@ module.exports = {
               );
               const successEmbed = new EmbedBuilder()
                 .setDescription(
-                  `Welcome messages have been updated to **${channel.name}**!`
+                  `Updated welcome messages to **${channel.name}**!`
                 )
-                .setColor("Green")
-                .setTimestamp();
+                .setColor("Green");
 
               await interaction.reply({
                 embeds: [successEmbed],
                 ephemeral: true,
               });
             }
+          }
+        }
+        break;
+      case "disable":
+        {
+          if (interaction.options.getSubcommand() === "disable") {
+            await joinSchema.findOneAndDelete({
+              guildId: interaction.guild.id,
+            });
+            await leaveSchema.findOneAndDelete({
+              guildId: interaction.guild.id,
+            });
+
+            const successEmbed = new EmbedBuilder()
+              .setDescription(`Successfully deleted the data in this guild.`)
+              .setColor("Blurple");
+            await interaction.reply({
+              embeds: [successEmbed],
+              ephemeral: true,
+            });
           }
         }
         break;
