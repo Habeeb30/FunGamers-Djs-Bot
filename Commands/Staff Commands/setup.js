@@ -24,6 +24,7 @@ module.exports = {
   async execute(interaction) {
     interaction.reply({
       content: "Successfully setup the verification channel!",
+      ephemeral: true,
     });
   },
 };
