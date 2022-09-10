@@ -61,6 +61,12 @@ module.exports = {
             .setDescription("The ticket systems description")
             .setRequired(false);
         })
+        .addStringOption((option) => {
+          return option
+            .setName("title")
+            .setDescription("The ticket system title")
+            .setRequired(false);
+        })
     )
     .addSubcommand((subcommand) =>
       subcommand
@@ -110,6 +116,9 @@ module.exports = {
       const description =
         interaction.options.getString("description") ||
         "Press 📩 to Create a Ticket";
+      const title = interaction.options.getString(
+        "title" || "Create a ticket!"
+      );
 
       await DB.findOneAndUpdate(
         { GuildId: guild.id },
@@ -129,7 +138,7 @@ module.exports = {
       channel.send({
         embeds: [
           new EmbedBuilder()
-            .setTitle("Create a ticket!")
+            .setTitle(title)
             .setDescription(description)
             .setColor("#303135"),
         ],
