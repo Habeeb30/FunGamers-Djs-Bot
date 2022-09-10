@@ -31,8 +31,8 @@ module.exports = {
           .setDescription(`\`\`\`${commands}\`\`\``)
           .setColor("0x2F3136")
           .addFields({
-            name: "<:4892staricon:1015234860194988084>  Command Count",
-            value: `<:reply:1015235235195146301> ${
+            name: "<:Staricon:1018152348247392317>  Command Count",
+            value: `<:reply:1018151357775089746> ${
               commands.length - 1
             } command(s)`,
           });

@@ -32,13 +32,13 @@ module.exports = {
       )
       .addFields(
         {
-          name: "<:Caregory:1016055565371318272> Total Command Categories",
-          value: `<:reply:1015235235195146301> ${dirs.length - 1}`,
+          name: "<:Folder:1018150584760672356> Total Command Categories",
+          value: `<:reply:1018151357775089746> ${dirs.length - 1}`,
           inline: true,
         },
         {
-          name: "<:SlashCmd:1016055567724326912> Total Slash Commands",
-          value: `<:reply:1015235235195146301> ${slashCommands.size}`,
+          name: "<:slashcommand:1018147929938214984> Total Slash Commands",
+          value: `<:reply:1018151357775089746> ${slashCommands.size}`,
           inline: true,
         }
       )
