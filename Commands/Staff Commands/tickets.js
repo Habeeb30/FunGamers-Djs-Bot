@@ -116,9 +116,8 @@ module.exports = {
       const description =
         interaction.options.getString("description") ||
         "Press 📩 to Create a Ticket";
-      const title = interaction.options.getString(
-        "title" || "Create a ticket!"
-      );
+      const title =
+        interaction.options.getString("title") || "Create a ticket!";
 
       await DB.findOneAndUpdate(
         { GuildId: guild.id },
@@ -140,7 +139,12 @@ module.exports = {
           new EmbedBuilder()
             .setTitle(title)
             .setDescription(description)
-            .setColor("#303135"),
+            .setColor("#303135")
+            .setFooter({
+              text: "The System by FunGamers",
+              iconURL:
+                "https://images-ext-1.discordapp.net/external/7zIa8B9n45knyj9tq5LWfjMSr2qjJFLezMseGZu5tos/https/emoji.discord.st/emojis/96586e0c-0d0c-4915-bab4-c5e9cd3fdec3.gif",
+            }),
         ],
         components: [
           new ActionRowBuilder().setComponents(

@@ -16,7 +16,19 @@ module.exports = {
         .setDescription("Channel to send the verification message to.")
         .setRequired(true)
         .addChannelTypes(ChannelType.GuildText)
-    ),
+    )
+    .addStringOption((option) => {
+      return option
+        .setName("description")
+        .setDescription("The verification systems description")
+        .setRequired(false);
+    })
+    .addStringOption((option) => {
+      return option
+        .setName("title")
+        .setDescription("The verification system title")
+        .setRequired(false);
+    }),
 
   /**
    *

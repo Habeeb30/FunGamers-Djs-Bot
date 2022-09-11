@@ -28,14 +28,18 @@ module.exports = {
       switch (interaction.commandName) {
         case "setup":
           const channel = interaction.options.getChannel("channel");
+          const description =
+            interaction.options.getString("description") ||
+            "Welcome to the server! Please authorize yourself by clicking the button below! When you verify you will be granted the 'verified' role";
+          const title =
+            interaction.options.getString("title") ||
+            `Welcome to ${interaction.guild.name}!`;
 
           const embed = new EmbedBuilder()
             .setThumbnail(
               "https://emoji.discord.st/emojis/5045414d-7cd4-4024-ac6b-809e920fcf9d.gif"
             )
-            .setDescription(
-              "Welcome to the server! Please authorize yourself by clicking the button below! When you verify you will be granted the 'verified' role"
-            )
+            .setDescription(description)
             .setColor("fcd303")
             .setImage(
               "https://verif-y.com/wp-content/uploads/2020/07/Verif-y-logo.png"
@@ -45,7 +49,7 @@ module.exports = {
               iconURL:
                 "https://images-ext-1.discordapp.net/external/7zIa8B9n45knyj9tq5LWfjMSr2qjJFLezMseGZu5tos/https/emoji.discord.st/emojis/96586e0c-0d0c-4915-bab4-c5e9cd3fdec3.gif",
             })
-            .setTitle(`Welcome to ${interaction.guild.name}!`);
+            .setTitle(title);
 
           const button = new ActionRowBuilder().setComponents(
             new ButtonBuilder()
