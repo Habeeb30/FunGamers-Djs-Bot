@@ -67,6 +67,12 @@ module.exports = {
             .setDescription("The ticket system title")
             .setRequired(false);
         })
+        .addStringOption((option) => {
+          return option
+            .setName("button")
+            .setDescription("The ticket system button name")
+            .setRequired(false);
+        })
     )
     .addSubcommand((subcommand) =>
       subcommand
@@ -118,6 +124,7 @@ module.exports = {
         "Press 📩 to Create a Ticket";
       const title =
         interaction.options.getString("title") || "Create a ticket!";
+      const button = interaction.options.getString("button") || " ";
 
       await DB.findOneAndUpdate(
         { GuildId: guild.id },
@@ -151,6 +158,7 @@ module.exports = {
             new ButtonBuilder()
               .setCustomId("createTicket")
               .setStyle(ButtonStyle.Primary)
+              .setLabel(button)
               .setEmoji("📩")
           ),
         ],
