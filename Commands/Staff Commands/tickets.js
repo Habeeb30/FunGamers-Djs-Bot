@@ -11,6 +11,7 @@ const {
 const DB = require("../../Schemas/ticketData");
 const countDB = require("../../Schemas/ticketCount");
 const userDB = require("../../Schemas/guildTickets");
+const Reply = require("../../Functions/Reply");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -164,31 +165,18 @@ module.exports = {
         ],
       });
 
-      interaction.reply({
-        embeds: [
-          new EmbedBuilder()
-            .setDescription("Ticket setup complete!")
-            .setColor("Green"),
-        ],
-        ephemeral: true,
-      });
+      Reply(interaction, "✅", "Ticket setup complete!", true);
     }
     if (interaction.options.getSubcommand() === "setup-delete") {
       const ticketConfig = await DB.findOne({
         GuildId: interaction.guild.id,
       });
       if (!ticketConfig) {
-        const NotCreatedSystem = new EmbedBuilder()
-          .setDescription("An error occured:(")
-          .setColor("Red");
-        interaction.reply({ embeds: [NotCreatedSystem], ephemeral: true });
+        Reply(interaction, "❎", "An error occurred");
       } else {
         await DB.findOneAndDelete({ GuildId: interaction.guild.id });
 
-        const CreatedSystem = new EmbedBuilder()
-          .setDescription("Ticket system successfully deleted!")
-          .setColor("Green");
-        interaction.reply({ embeds: [CreatedSystem], ephemeral: true });
+        Reply(interaction, "✅", "Ticket system successfully deleted!", true);
       }
     }
 
@@ -197,17 +185,11 @@ module.exports = {
         GuildID: interaction.guild.id,
       });
       if (!ticketConfig) {
-        const NotCreatedSystem = new EmbedBuilder()
-          .setDescription("An error occured:(")
-          .setColor("Red");
-        interaction.reply({ embeds: [NotCreatedSystem], ephemeral: true });
+        Reply(interaction, "❎", "An error occurred");
       } else {
         await countDB.deleteMany({ GuildID: interaction.guild.id });
 
-        const CreatedSystem = new EmbedBuilder()
-          .setDescription("Ticket system successfully deleted!")
-          .setColor("Green");
-        interaction.reply({ embeds: [CreatedSystem], ephemeral: true });
+        Reply(interaction, "✅", "Ticket system successfully deleted!", true);
       }
     }
 
@@ -226,10 +208,7 @@ module.exports = {
         });
 
       if (!ticketConfig) {
-        const NotCreatedSystem = new EmbedBuilder()
-          .setDescription("An error occured:(")
-          .setColor("Red");
-        interaction.reply({ embeds: [NotCreatedSystem], ephemeral: true });
+        Reply(interaction, "❎", "An error occurred");
       } else {
         if (interaction.channel.name.includes("ticket-")) {
           interaction.channel.permissionOverwrites.edit(user.id, {
@@ -266,10 +245,7 @@ module.exports = {
         });
 
       if (!ticketConfig) {
-        const NotCreatedSystem = new EmbedBuilder()
-          .setDescription("An error occured:(")
-          .setColor("Red");
-        interaction.reply({ embeds: [NotCreatedSystem], ephemeral: true });
+        Reply(interaction, "❎", "An error occurred");
       } else {
         if (interaction.channel.name.includes("ticket-")) {
           interaction.channel.permissionOverwrites.edit(user.id, {
