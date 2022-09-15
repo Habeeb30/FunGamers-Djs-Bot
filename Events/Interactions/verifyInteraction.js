@@ -131,6 +131,7 @@ module.exports = {
             });
 
           if (
+            modalSubmitInt?.fields &&
             modalSubmitInt.fields
               .getTextInputValue("veryUserInput")
               .toUpperCase() === randomToken
