@@ -21,7 +21,6 @@ const { loadModals } = require("./Handlers/modalHandler");
 
 client.events = new Collection();
 client.commands = new Collection();
-client.subCommands = new Collection();
 client.buttons = new Collection();
 client.modals = new Collection();
 // client.selectMenus = new Collection();

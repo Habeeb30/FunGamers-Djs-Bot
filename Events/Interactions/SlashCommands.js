@@ -31,17 +31,6 @@ module.exports = {
         "This command is only available to the developer.",
         true
       );
-
-    const subCommand = interaction.options.getSubcommand();
-    if (subCommand) {
-      const subCommandFile = client.subCommand.get(
-        `${commandName}.${subCommand}`
-      );
-      if (!subCommandFile)
-        return Reply(interaction, "❎", "This subCommand is outdated.", true);
-      subCommandFile.execute(interaction, client);
-    } else command.execute(interaction, client);
-
     if (command.UserPerms && command.UserPerms.length !== 0)
       if (!member.permissions.has(command.UserPerms))
         return Reply(
@@ -62,5 +51,7 @@ module.exports = {
           )}\` permission(s) to execute this command!`,
           true
         );
+
+    command.execute(interaction, client);
   },
 };
