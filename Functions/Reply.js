@@ -7,7 +7,6 @@ function Reply(interaction, emoji, description, type) {
         .setColor("#303135")
         .setDescription(`${emoji} | ${description}`),
     ],
-    ephemeral: true,
   });
 }
 
