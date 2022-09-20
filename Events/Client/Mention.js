@@ -45,7 +45,9 @@ module.exports = {
           new ActionRowBuilder().addComponents(
             new ButtonBuilder()
               .setStyle(ButtonStyle.Link)
-              .setURL("https://discord.gg/K3TGfHnvfP")
+              .setURL(
+                "https://discord.com/api/oauth2/authorize?client_id=924200727646195732&permissions=8&scope=bot%20applications.commands"
+              )
               .setLabel("Invite Me"),
 
             new ButtonBuilder()
