@@ -28,7 +28,7 @@ module.exports = {
     // }
 
     client.user.setPresence({
-      activities: [{ name: "/help", type: ActivityType.Listening }],
+      activities: [{ name: "First mention me", type: ActivityType.Custom }],
       status: "dnd",
     });
 
