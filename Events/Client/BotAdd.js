@@ -47,7 +47,7 @@ module.exports = {
       new ButtonBuilder()
         .setStyle(ButtonStyle.Link)
         .setURL(
-          "https://discord.com/api/oauth2/authorize?client_id=924200727646195732&permissions=8&scope=bot%20applications.commands"
+          "https://discord.com/api/oauth2/authorize?client_id=924200727646195732&scope=applications.commands+bot&permissions=66321471"
         )
         .setLabel("Invite Me"),
 
