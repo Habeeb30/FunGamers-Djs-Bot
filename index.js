@@ -31,6 +31,8 @@ loadButtons(client);
 
 require("./Handlers/antiCrash")(client);
 
+client.color = "#303135";
+
 ["Giveawaysys"].forEach((system) => {
   require(`./Systems/${system}`)(client);
 });
