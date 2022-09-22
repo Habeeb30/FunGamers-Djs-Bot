@@ -4,6 +4,7 @@ const {
   SlashCommandBuilder,
   ApplicationCommandOptionType,
   PermissionFlagsBits,
+  EmbedBuilder,
 } = require("discord.js");
 
 const data = {
@@ -59,11 +60,16 @@ module.exports = {
     const Target = options.getMember("user") || member;
 
     if (guild.members.me.roles.highest.position <= Role.position)
-      return EditReply(
-        interaction,
-        "❎",
-        "The role you're trying to manage for a member is higher than me!"
-      );
+      return interaction.followUp({
+        embeds: [
+          new EmbedBuilder()
+            .setColor(client.color)
+            .setDescription(
+              `The role you're trying to manage for a member is higher than me!`
+            ),
+        ],
+        ephemeral: true,
+      });
 
     switch (Options) {
       case "give":
@@ -72,27 +78,41 @@ module.exports = {
             guild.members.me.roles.highest.position <=
             Target.roles.highest.position
           )
-            return EditReply(
-              interaction,
-              "❎",
-              "The member you're trying to manage is higher than me in roles!"
-            );
+            return interaction.followUp({
+              embeds: [
+                new EmbedBuilder()
+                  .setColor(client.color)
+                  .setDescription(
+                    `The role you're trying to manage is higher than me in roles!`
+                  ),
+              ],
+              ephemeral: true,
+            });
 
           if (Target.roles.cache.find(r => r.id === Role.id))
-            return EditReply(
-              interaction,
-              "❎",
-              `${Target} 
-              already has the role, **${Role.name}**!`
-            );
+            return interaction.followUp({
+              embeds: [
+                new EmbedBuilder()
+                  .setColor(client.color)
+                  .setDescription(
+                    `${Target} already has the role, **${Role.name}**!`
+                  ),
+              ],
+              ephemeral: true,
+            });
 
           await Target.roles.add(Role);
 
-          EditReply(
-            interaction,
-            "✅",
-            `${Target} now has the role, **${Role.name}**!`
-          );
+          interaction.followUp({
+            embeds: [
+              new EmbedBuilder()
+                .setColor(client.color)
+                .setDescription(
+                  `${Target} now has the role, **${Role.name}**!`
+                ),
+            ],
+            ephemeral: true,
+          });
         }
         break;
 
@@ -102,27 +122,42 @@ module.exports = {
             guild.members.me.roles.highest.position <=
             Target.roles.highest.position
           )
-            return EditReply(
-              interaction,
-              "❎",
-              "The member you're trying to manage is higher than me in roles!"
-            );
+            return 
+            interaction.followUp({
+              embeds: [
+                new EmbedBuilder()
+                  .setColor(client.color)
+                  .setDescription(
+                    `The member you're trying to manage is higher than me in roles!`
+                  ),
+              ],
+              ephemeral: true,
+            });
 
           if (!Target.roles.cache.find(r => r.id === Role.id))
-            return EditReply(
-              interaction,
-              "❎",
-              `${Target} 
-                  doesn't have the role, **${Role.name}**!`
-            );
+            return interaction.followUp({
+              embeds: [
+                new EmbedBuilder()
+                  .setColor(client.color)
+                  .setDescription(
+                    `${Target} doesn't have the role, **${Role.name}**!`
+                  ),
+              ],
+              ephemeral: true,
+            }); 
 
           await Target.roles.remove(Role);
 
-          EditReply(
-            interaction,
-            "✅",
-            `${Target} has lost the role, **${Role.name}**!`
-          );
+          interaction.followUp({
+            embeds: [
+              new EmbedBuilder()
+                .setColor(client.color)
+                .setDescription(
+                  `${Target} has lost the role, **${Role.name}**!`
+                ),
+            ],
+            ephemeral: true,
+          });
         }
         break;
 
@@ -130,11 +165,16 @@ module.exports = {
         {
           const Members = guild.members.cache.filter(m => !m.user.bot);
 
-          EditReply(
-            interaction,
-            "✅",
-            `Everyone now has the role, **${Role.name}**!`
-          );
+          interaction.followUp({
+            embeds: [
+              new EmbedBuilder()
+                .setColor(client.color)
+                .setDescription(
+                  `Everyone now has the role, **${Role.name}**!`
+                ),
+            ],
+            ephemeral: true,
+          });
 
           await Members.forEach(m => m.roles.add(Role));
         }
@@ -144,12 +184,16 @@ module.exports = {
         {
           const Members = guild.members.cache.filter(m => !m.user.bot);
 
-          EditReply(
-            interaction,
-            "✅",
-            `Everyone has lost the role, **${Role.name}**!`
-          );
-
+          interaction.followUp({
+            embeds: [
+              new EmbedBuilder()
+                .setColor(client.color)
+                .setDescription(
+                  `Everyone has lost the role, **${Role.name}**!`
+                ),
+            ],
+            ephemeral: true,
+          });
           await Members.forEach(m => m.roles.remove(Role));
         }
         break;
