@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("setrole")
+    .setName("setrole-verification")
     .setDescription("Sets the verification Role!")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addRoleOption((option) =>

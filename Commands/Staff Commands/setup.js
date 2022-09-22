@@ -7,7 +7,7 @@ const {
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("setup")
+    .setName("setup-verification")
     .setDescription("Setup the verification channel bot!")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addChannelOption((option) =>
