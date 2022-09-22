@@ -16,6 +16,8 @@
     "ascii-table": "^0.0.9",
     "axios": "^0.27.2",
     "chalk": "^4.1.2",
+    "dbd-dark-dashboard": "^1.6.592",
+    "discord-dashboard": "^2.3.44",
     "discord-giveaways": "^6.0.1",
     "discord-html-transcripts": "^2.6.1",
     "discord.js": "^14.0.3",
