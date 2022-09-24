@@ -8,7 +8,8 @@ const Reply = require("../../Functions/Reply");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("ping")
-    .setDescription("Display the ping"),
+    .setDescription("Display this current websocket ping"),
+  category: "Information",
 
   /**
    * @param { Client } client
