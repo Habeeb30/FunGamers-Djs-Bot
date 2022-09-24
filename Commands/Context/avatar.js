@@ -3,6 +3,7 @@ const {
   ContextMenuCommandBuilder,
   ContextMenuCommandInteraction,
   ApplicationCommandType,
+  EmbedBuilder,
 } = require("discord.js");
 
 module.exports = {
