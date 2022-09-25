@@ -3,6 +3,8 @@ const DarkDashboard = require("dbd-dark-dashboard");
 const DBD = require("discord-dashboard");
 const leaveSchema = require("../../Schemas/leaveSchema");
 const joinSchema = require("../../Schemas/joinSchema");
+const GeneralLogsDB = require("../../Schemas/LogsChannel");
+const LogsSwitchDB = require("../../Schemas/GeneralLogs");
 
 module.exports = {
   name: "ready",
@@ -399,7 +401,369 @@ module.exports = {
             },
           ],
         },
+
+        // Logging System
+
+        {
+          categoryId: "logs",
+          categoryName: "Logging System",
+          categoryDescription: "Setup channels for General & Invite Logger",
+          categoryOptionsList: [
+            // General Logger Channel
+            {
+              optionId: "gench",
+              optionName: "General Logger Channel",
+              optionDescription: "Set or reset the server's logger channel",
+              optionType: DBD.formTypes.channelsSelect(
+                false,
+                (ChannelTypes = [ChannelType.GuildText])
+              ),
+              getActualSet: async ({ guild }) => {
+                let data = await GeneralLogsDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+                if (data) return data.Channel;
+                else return null;
+              },
+              setNew: async ({ guild, newData }) => {
+                let data = await GeneralLogsDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+
+                if (!newData) newData = null;
+
+                if (!data) {
+                  data = new GeneralLogsDB({
+                    Guild: guild.id,
+                    Channel: newData,
+                  });
+
+                  await data.save();
+                } else {
+                  data.Channel = newData;
+                  await data.save();
+                }
+                return;
+              },
+            },
+            // Configure Logger System & Member Role
+            {
+              optionId: "memrole",
+              optionName: "Configure Logger System",
+              optionDescription: "Member Role",
+              optionType: DBD.formTypes.switch(false),
+              themeOptions: {
+                minimalbutton: {
+                  first: true,
+                },
+              },
+              getActualSet: async ({ guild }) => {
+                let data = await LogsSwitchDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+                if (data) return data.MemberRole;
+                else return false;
+              },
+              setNew: async ({ guild, newData }) => {
+                let data = await LogsSwitchDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+
+                if (!newData) newData = false;
+
+                if (!data) {
+                  data = new LogsSwitchDB({
+                    Guild: guild.id,
+                    MemberRole: newData,
+                  });
+
+                  await data.save();
+                } else {
+                  data.MemberRole = newData;
+                  await data.save();
+                }
+                return;
+              },
+            },
+            // Member Nickname
+            {
+              optionId: "memnick",
+              optionName: "",
+              optionDescription: "Member Nickname",
+              optionType: DBD.formTypes.switch(false),
+              themeOptions: {
+                minimalbutton: {
+                  minimalbutton: true,
+                },
+              },
+              getActualSet: async ({ guild }) => {
+                let data = await LogsSwitchDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+                if (data) return data.MemberNick;
+                else return false;
+              },
+              setNew: async ({ guild, newData }) => {
+                let data = await LogsSwitchDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+
+                if (!newData) newData = false;
+
+                if (!data) {
+                  data = new LogsSwitchDB({
+                    Guild: guild.id,
+                    MemberNick: newData,
+                  });
+
+                  await data.save();
+                } else {
+                  data.MemberNick = newData;
+                  await data.save();
+                }
+                return;
+              },
+            },
+            // Channel Topic
+            {
+              optionId: "chntpc",
+              optionName: "",
+              optionDescription: "Channel Topic",
+              optionType: DBD.formTypes.switch(false),
+              themeOptions: {
+                minimalbutton: {
+                  minimalbutton: true,
+                },
+              },
+              getActualSet: async ({ guild }) => {
+                let data = await LogsSwitchDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+                if (data) return data.ChannelTopic;
+                else return false;
+              },
+              setNew: async ({ guild, newData }) => {
+                let data = await LogsSwitchDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+
+                if (!newData) newData = false;
+
+                if (!data) {
+                  data = new LogsSwitchDB({
+                    Guild: guild.id,
+                    ChannelTopic: newData,
+                  });
+
+                  await data.save();
+                } else {
+                  data.ChannelTopic = newData;
+                  await data.save();
+                }
+                return;
+              },
+            },
+            // Member Boost
+            {
+              optionId: "membst",
+              optionName: "",
+              optionDescription: "Member Boost",
+              optionType: DBD.formTypes.switch(false),
+              themeOptions: {
+                minimalbutton: {
+                  last: true,
+                },
+              },
+              getActualSet: async ({ guild }) => {
+                let data = await LogsSwitchDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+                if (data) return data.MemberBoost;
+                else return false;
+              },
+              setNew: async ({ guild, newData }) => {
+                let data = await LogsSwitchDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+
+                if (!newData) newData = false;
+
+                if (!data) {
+                  data = new LogsSwitchDB({
+                    Guild: guild.id,
+                    MemberBoost: newData,
+                  });
+
+                  await data.save();
+                } else {
+                  data.MemberBoost = newData;
+                  await data.save();
+                }
+                return;
+              },
+            },
+            // Role Status
+            {
+              optionId: "rolest",
+              optionName: "",
+              optionDescription: "Role Status",
+              optionType: DBD.formTypes.switch(false),
+              themeOptions: {
+                minimalbutton: {
+                  first: true,
+                },
+              },
+              getActualSet: async ({ guild }) => {
+                let data = await LogsSwitchDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+                if (data) return data.RoleStatus;
+                else return false;
+              },
+              setNew: async ({ guild, newData }) => {
+                let data = await LogsSwitchDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+
+                if (!newData) newData = false;
+
+                if (!data) {
+                  data = new LogsSwitchDB({
+                    Guild: guild.id,
+                    RoleStatus: newData,
+                  });
+
+                  await data.save();
+                } else {
+                  data.RoleStatus = newData;
+                  await data.save();
+                }
+                return;
+              },
+            },
+            // Channel Status
+            {
+              optionId: "chnst",
+              optionName: "",
+              optionDescription: "Channel Status",
+              optionType: DBD.formTypes.switch(false),
+              themeOptions: {
+                minimalbutton: {
+                  minimalbutton: true,
+                },
+              },
+              getActualSet: async ({ guild }) => {
+                let data = await LogsSwitchDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+                if (data) return data.ChannelStatus;
+                else return false;
+              },
+              setNew: async ({ guild, newData }) => {
+                let data = await LogsSwitchDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+
+                if (!newData) newData = false;
+
+                if (!data) {
+                  data = new LogsSwitchDB({
+                    Guild: guild.id,
+                    ChannelStatus: newData,
+                  });
+
+                  await data.save();
+                } else {
+                  data.ChannelStatus = newData;
+                  await data.save();
+                }
+                return;
+              },
+            },
+            // Emoji Status
+            {
+              optionId: "emjst",
+              optionName: "",
+              optionDescription: "Emoji Status",
+              optionType: DBD.formTypes.switch(false),
+              themeOptions: {
+                minimalbutton: {
+                  minimalbutton: true,
+                },
+              },
+              getActualSet: async ({ guild }) => {
+                let data = await LogsSwitchDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+                if (data) return data.EmojiStatus;
+                else return false;
+              },
+              setNew: async ({ guild, newData }) => {
+                let data = await LogsSwitchDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+
+                if (!newData) newData = false;
+
+                if (!data) {
+                  data = new LogsSwitchDB({
+                    Guild: guild.id,
+                    EmojiStatus: newData,
+                  });
+
+                  await data.save();
+                } else {
+                  data.EmojiStatus = newData;
+                  await data.save();
+                }
+                return;
+              },
+            },
+            // Member Ban
+            {
+              optionId: "memban",
+              optionName: "",
+              optionDescription: "Member Ban",
+              optionType: DBD.formTypes.switch(false),
+              themeOptions: {
+                minimalbutton: {
+                  last: true,
+                },
+              },
+              getActualSet: async ({ guild }) => {
+                let data = await LogsSwitchDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+                if (data) return data.MemberBan;
+                else return false;
+              },
+              setNew: async ({ guild, newData }) => {
+                let data = await LogsSwitchDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+
+                if (!newData) newData = false;
+
+                if (!data) {
+                  data = new LogsSwitchDB({
+                    Guild: guild.id,
+                    MemberBan: newData,
+                  });
+
+                  await data.save();
+                } else {
+                  data.MemberBan = newData;
+                  await data.save();
+                }
+                return;
+              },
+            },
+          ],
+        },
       ],
+      allowedCheck: async ({ guild, user }) => {
+        return { allowed: true, errorMessage: "String" | null };
+      },
     });
     Dashboard.init();
   },
