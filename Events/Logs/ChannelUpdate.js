@@ -3,7 +3,7 @@ const DB = require("../../Schemas/LogsChannel");
 const SwitchDB = require("../../Schemas/GeneralLogs");
 
 module.exports = {
-  name: "channelDelete",
+  name: "channelUpdate",
 
   /**
    * @param {TextChannel} oldChannel
@@ -11,7 +11,7 @@ module.exports = {
    * @param {Client} client
    */
   async execute(oldChannel, newChannel, client) {
-    const { guild } = channel;
+    const { guild } = newChannel;
 
     const data = await DB.findOne({ Guild: guild.id }).catch((err) =>
       console.log(err)
