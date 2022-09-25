@@ -15,11 +15,13 @@ module.exports = {
     const { user } = client;
 
     let Information = [];
+    let Context = [];
     let Moderation = [];
     let Public = [];
     let Staff = [];
 
     const info = client.commands.filter((x) => x.category === "Information");
+    const context = client.commands.filter((x) => x.category === "Context");
     const mod = client.commands.filter((x) => x.category === "Moderation");
     const public = client.commands.filter((x) => x.category === "Public");
     const staff = client.commands.filter((x) => x.category === "Staff");
@@ -111,6 +113,12 @@ module.exports = {
             subTitle: "Information Commands",
             aliasesDisabled: false,
             list: Information,
+          },
+          {
+            category: "Context",
+            subTitle: "Context Menu",
+            aliasesDisabled: false,
+            list: Context,
           },
           {
             category: "Moderation",
