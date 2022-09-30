@@ -24,9 +24,9 @@ const { loadButtons } = require("./Handlers/buttonHandler");
 const { loadModals } = require("./Handlers/modalHandler");
 
 client.events = new Collection();
-client.events2 = new Collection();
+// client.events2 = new Collection();
 client.commands = new Collection();
-client.commands2 = new Collection();
+// client.commands2 = new Collection();
 client.buttons = new Collection();
 client.modals = new Collection();
 // client.selectMenus = new Collection();
@@ -40,7 +40,7 @@ loadButtons(client);
 
 require("./Handlers/antiCrash")(client);
 
-const Handlers = ["Commands", "Events", "EventStack"];
+const Handlers = ["EventStack"];
 
 Handlers.forEach((handler) => {
   require(`./Handlers/${handler}`)(client, PG, Ascii);
