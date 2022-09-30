@@ -1,14 +1,13 @@
 const {
   EmbedBuilder,
-  ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
+  ActionRowBuilder,
   PermissionFlagsBits,
-  ChatInputCommandInteraction,
 } = require("discord.js");
-const ticketData = require("../../Schemas/ticketData");
-const ticketCount = require("../../Schemas/ticketCount");
-const userData = require("../../Schemas/guildTickets");
+const Tickets = require("../../Schemas/Tickets");
+const TicketSetup = require("../../Schemas/TicketSetup");
+const TicketCount = require("../../Schemas/TicketCount");
 
 module.exports = {
   id: "createTicket",
@@ -16,45 +15,36 @@ module.exports = {
    *
    * @param {ChatInputCommandInteraction} interaction
    */
-  async execute(interaction, client) {
+  async execute(interaction) {
     const { guild, member } = interaction;
+    const i = interaction;
 
-    const ticketDB = await ticketData.findOne({
-      GuildId: interaction.guild.id,
-    });
-    if (!ticketDB)
-      return interaction.reply({
-        embeds: [
-          new EmbedBuilder()
-            .setColor("#303135")
-            .setDescription(`Can't find any data on the ticket system:/`),
-        ],
+    const TicketSetupDB = await TicketSetup.findOne({ GuildID: guild.id });
+    if (!TicketSetupDB)
+      return i.reply({
+        content: `> **Alert:** Can't find any data on the setup:/`,
         ephemeral: true,
       });
 
-    const TicketCount = ticketCount.findOne({ GuildID: guild.id });
-    const Count = ((await TicketCount.countDocuments()) + 1).toString();
+    const TicketCountDB = TicketCount.findOne({ GuildID: guild.id });
+    const Count = ((await TicketCountDB.countDocuments()) + 1).toString();
 
-    const TicketAlreadyOpen = await userData.findOne({
+    const TicketLimit = await Tickets.findOne({
       GuildID: guild.id,
-      OwnerID: member.id,
+      Creator: member.id,
       Closed: false,
     });
-    if (TicketAlreadyOpen)
-      return interaction.reply({
-        embeds: [
-          new EmbedBuilder()
-            .setColor("#303135")
-            .setDescription(`You have a ticket open already`),
-        ],
+    if (TicketLimit)
+      return i.reply({
+        content: `> **Warning:** You already have a ticket open`,
         ephemeral: true,
       });
 
     await guild.channels
       .create({
         name: `${"Ticket" + "-" + interaction.user.username + "-" + Count}`,
-        topic: `Your ID **${member.id}**\nTicket ID **${Count}**`,
-        parent: ticketDB.Category,
+        topic: `**Your ID:** ${member.id}\n**Ticket ID:** ${Count}`,
+        parent: TicketSetupDB.OpenCategoryID,
         permissionOverwrites: [
           {
             id: member.id,
@@ -65,7 +55,7 @@ module.exports = {
             ],
           },
           {
-            id: ticketDB.SupportRole,
+            id: TicketSetupDB.SupportRoleID,
             allow: [
               PermissionFlagsBits.ViewChannel,
               PermissionFlagsBits.SendMessages,
@@ -89,67 +79,51 @@ module.exports = {
         ],
       })
       .then(async (channel) => {
-        await userData
-          .create({
-            GuildID: guild.id,
-            OwnerID: member.id,
-            MembersID: member.id,
-            ChannelID: channel.id,
-            Locked: false,
-            Claimed: false,
-            Requested: false,
-          })
+        await Tickets.create({
+          GuildID: guild.id,
+          ChannelID: channel.id,
+          TicketID: Count,
+          CreatorID: member.user.id,
+          CreatorTag: member.user.tag,
+          MembersID: member.id,
+          CreatedAt: new Date().toLocaleString(),
+          Deleted: false,
+          Closed: false,
+          Archived: false,
+          MessageID: false,
+        })
           .then(async () => {
-            await ticketCount.create({
+            await TicketCount.create({
               GuildID: guild.id,
               TicketCount: Count,
             });
+          })
+          .then(async () => {
+            channel.setRateLimitPerUser(3);
           });
+        channel.setPosition(0);
 
         const Embed = new EmbedBuilder()
+          .setColor("#5865F2")
           .setAuthor({
             name: `${guild.name} | Ticket ID: ${Count}`,
             icon: guild.iconURL({ dynamic: true }),
           })
-          .setColor("#303135")
           .addFields({
-            name: `While your waiting you can do these things:`,
-            value: `
-              > \`-\` Provide reason for this ticket.
-              > \`-\` Provide as much details as you can!
-              `,
-          })
-          .addFields({
-            name: `Admin Actions`,
-            value: `
-              > \`🔒\` - Locks the ticket
-              > \`🔓\` - Unlocks the ticket
-              > \`📥\` - Claims the ticket
-              `,
+            name: `Information`,
+            value: `\`-\` Provide as much details as possible!\n\`-\` Provide a reason for the ticket!`,
           });
 
-        const TicketActions = new ActionRowBuilder().addComponents(
-          new ButtonBuilder()
-            .setCustomId("close_ticket")
-            .setEmoji("⛔")
-            .setStyle(ButtonStyle.Primary),
-          new ButtonBuilder()
-            .setCustomId("lock_ticket")
-            .setEmoji("🔒")
-            .setStyle(ButtonStyle.Primary),
-          new ButtonBuilder()
-            .setCustomId("unlock_ticket")
-            .setEmoji("🔓")
-            .setStyle(ButtonStyle.Primary),
-          new ButtonBuilder()
-            .setCustomId("claim")
-            .setEmoji("📥")
-            .setStyle(ButtonStyle.Success)
-        );
-
-        channel.send({
+        await channel.send({
           embeds: [Embed],
-          components: [TicketActions],
+          components: [
+            new ActionRowBuilder().addComponents(
+              new ButtonBuilder()
+                .setCustomId(`close_ticket`)
+                .setEmoji("⛔")
+                .setStyle(ButtonStyle.Secondary)
+            ),
+          ],
         });
 
         await channel
@@ -159,15 +133,11 @@ module.exports = {
           .then((message) => {
             setTimeout(() => {
               message.delete().catch(() => {});
-            }, 1 * 5000);
+            }, 5 * 1000);
           });
 
-        interaction.reply({
-          embeds: [
-            new EmbedBuilder()
-              .setColor("#303135")
-              .setDescription(`Your ticket has been created: ${channel}`),
-          ],
+        await i.reply({
+          content: `Your ticket has been created: ${channel}!`,
           ephemeral: true,
         });
       });

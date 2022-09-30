@@ -3,19 +3,18 @@ const {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-  PermissionFlagsBits,
 } = require("discord.js");
 const Tickets = require("../../Schemas/Tickets");
 const TicketSetup = require("../../Schemas/TicketSetup");
 
 module.exports = {
-  id: "close_ticket",
+  id: "archive_ticket",
   /**
    *
    * @param {ChatInputCommandInteraction} interaction
    */
   async execute(interaction) {
-    const { guild, channel, member } = interaction;
+    const { guild, channel, member, message } = interaction;
     const i = interaction;
 
     const TicketSetupDB = await TicketSetup.findOne({
@@ -55,59 +54,41 @@ module.exports = {
         ephemeral: true,
       });
 
-    if (TicketsDB.Closed == true)
-      return i.reply({
-        content: `> **Alert:** Ticket already closed`,
-        ephemeral: true,
-      });
-
     if (TicketsDB.Deleted == true)
       return i.reply({
         content: `> **Alert:** Ticket has deleted can't use any actions`,
         ephemeral: true,
       });
 
+    if (TicketsDB.Archived == true)
+      return i.reply({
+        content: `> **Alert:** Ticket already archived`,
+        ephemeral: true,
+      });
+
     await i.reply({
-      content: `> **Alert:** You closed the ticket`,
+      content: `> **Alert:** You archived the ticket`,
       ephemeral: true,
     });
 
     channel.send({
       embeds: [
         new EmbedBuilder()
-          .setColor("Yellow")
-          .setDescription(`Ticket closed by ${member}.`),
+          .setColor("Red")
+          .setDescription(`Ticket archived by ${member}.`),
       ],
     });
-
-    channel
-      .edit({ parent: TicketSetupDB.ClosedCategoryID })
-      .then(async (channel) => {
-        TicketsDB.MembersID.forEach((m) => {
-          channel.permissionOverwrites.edit(m, {
-            ViewChannel: false,
-            SendMessages: false,
-            ReadMessageHistory: false,
-          });
-        });
-      });
     const supportpanel = await channel.send({
       embeds: [
         new EmbedBuilder().setColor("#303135").setDescription(
           `
-            \`-\` Want to save the ticket please press "Archive Ticket"
-            \`-\` Want to open the ticket again after you closed it press re-open
-            \`-\` Want to delete the ticket press "Delete"!
-          `
+                \`-\` Want to open the ticket again after you closed it press re-open
+                \`-\` Want to delete the ticket press "Delete"!
+                `
         ),
       ],
       components: [
         new ActionRowBuilder().addComponents(
-          new ButtonBuilder()
-            .setCustomId(`archive_ticket`)
-            .setLabel(`Archive Ticket`)
-            .setEmoji("📦")
-            .setStyle(ButtonStyle.Secondary),
           new ButtonBuilder()
             .setCustomId(`open_ticket`)
             .setLabel(`Re-open`)
@@ -122,11 +103,14 @@ module.exports = {
       ],
     });
 
+    channel.edit({ parent: TicketSetupDB.ArchiveCategoryID });
+    message.delete(TicketsDB.MessageID);
+
     await Tickets.findOneAndUpdate(
       {
         ChannelID: channel.id,
       },
-      { Closed: true, MessageID: supportpanel.id }
+      { Archived: true, MessageID: supportpanel.id }
     );
   },
 };
