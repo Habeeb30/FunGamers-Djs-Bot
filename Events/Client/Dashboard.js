@@ -758,6 +758,45 @@ module.exports = {
                 return;
               },
             },
+            // Invite
+            {
+              optionId: "invite",
+              optionName: "",
+              optionDescription: "Invite Logger",
+              optionType: DBD.formTypes.switch(false),
+              themeOptions: {
+                minimalbutton: {
+                  minimalbutton: true,
+                },
+              },
+              getActualSet: async ({ guild }) => {
+                let data = await LogsSwitchDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+                if (data) return data.Invite;
+                else return false;
+              },
+              setNew: async ({ guild, newData }) => {
+                let data = await LogsSwitchDB.findOne({
+                  Guild: guild.id,
+                }).catch((err) => {});
+
+                if (!newData) newData = false;
+
+                if (!data) {
+                  data = new LogsSwitchDB({
+                    Guild: guild.id,
+                    Invite: newData,
+                  });
+
+                  await data.save();
+                } else {
+                  data.Invite = newData;
+                  await data.save();
+                }
+                return;
+              },
+            },
           ],
         },
       ],

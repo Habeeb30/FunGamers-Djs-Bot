@@ -14,24 +14,37 @@ const client = new Client({
   intents: [Guilds, GuildMembers, GuildMessages, GuildMessageReactions],
   partials: [User, Message, GuildMember, ThreadMember],
 });
+const { promisify } = require("util");
+const { glob } = require("glob");
+const PG = promisify(glob);
+const Ascii = require("ascii-table");
 
 const { loadEvents } = require("./Handlers/eventHandler");
-const { loadEventStack } = require("./Handlers/EventStack");
 const { loadButtons } = require("./Handlers/buttonHandler");
 const { loadModals } = require("./Handlers/modalHandler");
 
 client.events = new Collection();
+client.events2 = new Collection();
 client.commands = new Collection();
+client.commands2 = new Collection();
 client.buttons = new Collection();
 client.modals = new Collection();
 // client.selectMenus = new Collection();
 
+const { DiscordTogether } = require("discord-together");
+client.discordTogether = new DiscordTogether(client);
+
 loadEvents(client);
-loadEventStack(client);
 loadModals(client);
 loadButtons(client);
 
 require("./Handlers/antiCrash")(client);
+
+const Handlers = ["Commands", "Events", "EventStack"];
+
+Handlers.forEach((handler) => {
+  require(`./Handlers/${handler}`)(client, PG, Ascii);
+});
 
 client.color = "#303135";
 

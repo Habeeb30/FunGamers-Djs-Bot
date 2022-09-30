@@ -1,12 +1,9 @@
-async function loadEventStack(client) {
-  const { loadFiles } = require("../Functions/fileLoader");
-  const ascii = require("ascii-table");
-  const table = new ascii("EventStack List");
+const { Client } = require("discord.js");
 
-  const Files = await loadFiles("EventStack");
-
-  Files.map((value) => require(value));
-  return console.log(table.toString());
-}
-
-module.exports = { loadEventStack };
+/**
+ * @param {Client} client
+ */
+module.exports = async (client, PG, Ascii) => {
+  const EventFiles = await PG(`${process.cwd()}/EventStack/*.js`);
+  EventFiles.map((value) => require(value));
+};

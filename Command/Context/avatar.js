@@ -1,15 +1,14 @@
 const {
   Client,
-  ContextMenuCommandBuilder,
   ContextMenuCommandInteraction,
   ApplicationCommandType,
   EmbedBuilder,
 } = require("discord.js");
 
 module.exports = {
-  data: new ContextMenuCommandBuilder()
-    .setName("Avatar")
-    .setType(ApplicationCommandType.User),
+  name: "Avatar",
+  type: ApplicationCommandType.User,
+  context: true,
   category: "Context",
 
   /**
@@ -30,7 +29,7 @@ module.exports = {
         iconURL: target.user.displayAvatarURL(),
       })
       .setImage(target.user.displayAvatarURL({ size: 512 }))
-      .setFooter({ text: "Avatar by FunGamers" })
+      .setFooter({ text: "Avatar by Drago" })
       .setTimestamp();
 
     return interaction.editReply({ embeds: [Embed] });

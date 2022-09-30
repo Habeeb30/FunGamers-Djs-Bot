@@ -12,6 +12,6 @@ module.exports = model(
     ChannelStatus: Boolean,
     EmojiStatus: Boolean,
     MemberBan: Boolean,
-    MemberKick: Boolean,
+    Invite: Boolean,
   })
 );
