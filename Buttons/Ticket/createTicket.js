@@ -104,7 +104,7 @@ module.exports = {
         channel.setPosition(0);
 
         const Embed = new EmbedBuilder()
-          .setColor("#5865F2")
+          .setColor(client.color)
           .setAuthor({
             name: `${guild.name} | Ticket ID: ${Count}`,
             icon: guild.iconURL({ dynamic: true }),

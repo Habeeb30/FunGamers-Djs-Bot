@@ -25,7 +25,7 @@ module.exports = {
       return i.reply({
         embeds: [
           new EmbedBuilder()
-            .setColor("#303135")
+            .setColor(client.color)
             .setDescription(`Can't find any data on the ticket system:/`),
         ],
         ephemeral: true,
@@ -39,7 +39,7 @@ module.exports = {
       return i.reply({
         embeds: [
           new EmbedBuilder()
-            .setColor("#303135")
+            .setColor(client.color)
             .setDescription(`Can't find any data on this ticket:/`),
         ],
         ephemeral: true,
@@ -49,7 +49,7 @@ module.exports = {
       return i.reply({
         embeds: [
           new EmbedBuilder()
-            .setColor("#303135")
+            .setColor(client.color)
             .setDescription(`Your not allowed to use this action!`),
         ],
         ephemeral: true,
@@ -75,7 +75,7 @@ module.exports = {
     channel.send({
       embeds: [
         new EmbedBuilder()
-          .setColor("Yellow")
+          .setColor(client.color)
           .setDescription(`Ticket closed by ${member}.`),
       ],
     });
@@ -93,7 +93,7 @@ module.exports = {
       });
     const supportpanel = await channel.send({
       embeds: [
-        new EmbedBuilder().setColor("#303135").setDescription(
+        new EmbedBuilder().setColor(client.color).setDescription(
           `
             \`-\` Want to save the ticket please press "Archive Ticket"
             \`-\` Want to open the ticket again after you closed it press re-open

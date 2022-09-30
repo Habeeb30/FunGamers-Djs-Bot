@@ -19,7 +19,7 @@ module.exports = {
       return i.reply({
         embeds: [
           new EmbedBuilder()
-            .setColor("#303135")
+            .setColor(client.color)
             .setDescription(`Can't find any data on the ticket system:/`),
         ],
         ephemeral: true,
@@ -33,7 +33,7 @@ module.exports = {
       return i.reply({
         embeds: [
           new EmbedBuilder()
-            .setColor("#303135")
+            .setColor(client.color)
             .setDescription(`Can't find any data on this ticket:/`),
         ],
         ephemeral: true,
@@ -43,7 +43,7 @@ module.exports = {
       return i.reply({
         embeds: [
           new EmbedBuilder()
-            .setColor("#303135")
+            .setColor(client.color)
             .setDescription(`Your not allowed to use this action!`),
         ],
         ephemeral: true,
@@ -69,7 +69,7 @@ module.exports = {
     channel.send({
       embeds: [
         new EmbedBuilder()
-          .setColor("Green")
+          .setColor(client.color)
           .setDescription(`Ticket re-opened by ${member}.`),
       ],
     });

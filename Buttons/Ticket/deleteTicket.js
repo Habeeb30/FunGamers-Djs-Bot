@@ -21,7 +21,7 @@ module.exports = {
       return i.reply({
         embeds: [
           new EmbedBuilder()
-            .setColor("#303135")
+            .setColor(client.color)
             .setDescription(`Can't find any data on the ticket system:/`),
         ],
         ephemeral: true,
@@ -35,7 +35,7 @@ module.exports = {
       return i.reply({
         embeds: [
           new EmbedBuilder()
-            .setColor("#303135")
+            .setColor(client.color)
             .setDescription(`Can't find any data on this ticket:/`),
         ],
         ephemeral: true,
@@ -58,7 +58,7 @@ module.exports = {
       return i.reply({
         embeds: [
           new EmbedBuilder()
-            .setColor("#303135")
+            .setColor(client.color)
             .setDescription(`Your not allowed to use this action!`),
         ],
         ephemeral: true,
@@ -85,7 +85,7 @@ module.exports = {
     channel.send({
       embeds: [
         new EmbedBuilder()
-          .setColor("Red")
+          .setColor(client.color)
           .setDescription(`Ticket will be deleted in \`5\` seconds!`),
       ],
     });
@@ -101,7 +101,7 @@ module.exports = {
     TChannel.send({
       embeds: [
         new EmbedBuilder()
-          .setColor("Blurple")
+          .setColor(client.color)
           .addFields({
             name: `Data:`,
             value: `
