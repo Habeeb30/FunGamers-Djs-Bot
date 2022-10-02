@@ -37,13 +37,13 @@ module.exports = {
     DBD.Dashboard = DBD.UpdatedClass();
 
     const Dashboard = new DBD.Dashboard({
-      port: 443,
+      port: 80,
       client: {
         id: process.env.CLIENT_ID,
         secret: process.env.CLIENT_SECRET,
       },
       redirectUri: "https://fungamers.herokuapp.com/discord/callback",
-      domain: "https://fungamers.herokuapp.com/",
+      domain: "https://heroku.com/",
       useThemeMaintenance: true,
       useTheme404: true,
       bot: client,
