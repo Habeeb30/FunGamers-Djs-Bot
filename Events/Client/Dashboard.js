@@ -43,7 +43,7 @@ module.exports = {
         secret: process.env.CLIENT_SECRET,
       },
       redirectUri: "http://xyz.daki.cc:4971/discord/callback",
-      domain: "http://xyz.daki.cc/",
+      domain: "http://xyz.daki.cc",
       useThemeMaintenance: true,
       useTheme404: true,
       bot: client,
