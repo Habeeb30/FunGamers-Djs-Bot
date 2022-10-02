@@ -37,13 +37,13 @@ module.exports = {
     DBD.Dashboard = DBD.UpdatedClass();
 
     const Dashboard = new DBD.Dashboard({
-      port: 80,
+      port: 4971,
       client: {
         id: process.env.CLIENT_ID,
         secret: process.env.CLIENT_SECRET,
       },
-      redirectUri: "https://fungamers.herokuapp.com/discord/callback",
-      domain: "https://heroku.com/",
+      redirectUri: "http://xyz.daki.cc:4971/discord/callback",
+      domain: "http://xyz.daki.cc/",
       useThemeMaintenance: true,
       useTheme404: true,
       bot: client,
@@ -60,7 +60,7 @@ module.exports = {
       invite: {
         clientId: client.user.id,
         scopes: ["bot", "applications.commands", "guilds", "identify"],
-        permissions: "66321471",
+        permissions: "1099511627775",
         redirectUrl: "https://discord.gg/K3TGfHnvfP",
       },
       theme: DarkDashboard({
@@ -68,8 +68,8 @@ module.exports = {
           createdBy: "Habeeb M",
           websiteTitle: "FunGamers",
           websiteName: "FunGamers",
-          websiteUrl: "https://fungamers.herokuapp.com/",
-          dashboardUrl: "https://fungamers.herokuapp.com/",
+          websiteUrl: "http://xyz.daki.cc:4971/",
+          dashboardUrl: "http://xyz.daki.cc:4971/",
           supporteMail: "support@",
           supportServer: "https://discord.gg/yYq4UgRRzz",
           imageFavicon: "https://i.ibb.co/r7ZDcNB/My-FG-Logo.jpg",
