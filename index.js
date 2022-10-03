@@ -48,10 +48,6 @@ Handlers.forEach((handler) => {
 
 client.color = "#303135";
 
-["Giveawaysys"].forEach((system) => {
-  require(`./Systems/${system}`)(client);
-});
-
 module.exports = client;
 
 client.login(Token);
