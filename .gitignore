@@ -4,4 +4,3 @@ node_modules
 package-lock.json
 .env
 FunGamers_BOT.tar.xz
-serverInfo.js
