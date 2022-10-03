@@ -72,7 +72,7 @@ client.on("guildMemberAdd", async (member) => {
 
     const Embed = new EmbedBuilder()
       .setColor(client.color)
-      .setTitle("Invite Logged")
+      .setTitle("⚙ | Invite Logged")
       .setTimestamp();
 
     if (!invite)
@@ -97,7 +97,7 @@ client.on("guildMemberAdd", async (member) => {
           ],
         });
       })
-      .cache((err) => {
+      .catch((err) => {
         if (err.code !== 50013) return console.log(err);
       });
   });
