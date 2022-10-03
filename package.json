@@ -1,6 +1,6 @@
 {
   "name": "fungamers-discord-bot",
-  "version": "5.4.0",
+  "version": "5.9.0",
   "engines": {
     "npm": ">=8.14.0",
     "node": ">=16.16.0"
