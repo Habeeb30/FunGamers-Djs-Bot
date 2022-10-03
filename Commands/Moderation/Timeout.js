@@ -83,7 +83,7 @@ module.exports = {
       return console.log("Error occurred in Timeout.js", err);
     });
 
-    const newInfractionsObject = {
+    const newInfarctionsObject = {
       IssuerID: member.id,
       IssuerTag: member.user.tag,
       Reason: reason,
@@ -95,9 +95,9 @@ module.exports = {
       userData = await Database.create({
         Guild: guild.id,
         User: target.id,
-        Infractions: [newInfractionsObject],
+        Infarctions: [newInfarctionsObject],
       });
-    else userData.Infarctions.push(newInfractionsObject)(await userData.save());
+    else userData.Infarctions.push(newInfarctionsObject)(await userData.save());
 
     const successEmbed = new EmbedBuilder()
       .setAuthor({ name: "Timeout Issued", iconURL: guild.iconURL() })
