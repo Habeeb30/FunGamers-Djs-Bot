@@ -2,49 +2,40 @@ const {
   Client,
   ChatInputCommandInteraction,
   SlashCommandBuilder,
-  ApplicationCommandOptionType,
   PermissionFlagsBits,
   EmbedBuilder,
 } = require("discord.js");
 
-const data = {
-  name: "role",
-  description: "Give or remove role from a member or everyone",
-  UserPerms: ["ManageRoles"],
-  options: [
-    {
-      name: "options",
-      description: "Select the option",
-      type: ApplicationCommandOptionType.String,
-      required: true,
-      choices: [
-        { name: "Give", value: "give" },
-        { name: "Remove", value: "remove" },
-        { name: "Give All", value: "give-all" },
-        { name: "Remove All", value: "remove-all" },
-      ],
-    },
-    {
-      name: "role",
-      description: "Select the role to be managed",
-      required: true,
-      type: ApplicationCommandOptionType.Role,
-    },
-    {
-      name: "user",
-      description: "Select the user to manage roles",
-      required: false,
-      type: ApplicationCommandOptionType.User,
-    },
-  ],
-  toJSON: () => ({ ...data }),
-};
-
-const EditReply = require("../../Functions/EditReply");
-const Reply = require("../../Functions/Reply")
 module.exports = {
-  data,
-  ...data,
+  data: new SlashCommandBuilder()
+    .setName("role")
+    .setDescription("Give or remove role from a member or everyone")
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles)
+    .setDMPermission(false)
+    .addStringOption((options) =>
+      options
+        .setName("options")
+        .setDescription("Select the option")
+        .setRequired(true)
+        .addChoices(
+          { name: "Give", value: "give" },
+          { name: "Remove", value: "remove" },
+          { name: "Give All", value: "give-all" },
+          { name: "Remove All", value: "remove-all" }
+        )
+    )
+    .addRoleOption((options) =>
+      options
+        .setName("role")
+        .setDescription("Select the role to be managed")
+        .setRequired(true)
+    )
+    .addUserOption((options) =>
+      options
+        .setName("user")
+        .setDescription("Select the user to manage roles")
+        .setRequired(false)
+    ),
   /**
    *
    * @param {ChatInputCommandInteraction} interaction
@@ -89,7 +80,7 @@ module.exports = {
               ephemeral: true,
             });
 
-          if (Target.roles.cache.find(r => r.id === Role.id))
+          if (Target.roles.cache.find((r) => r.id === Role.id))
             return interaction.followUp({
               embeds: [
                 new EmbedBuilder()
@@ -122,19 +113,19 @@ module.exports = {
             guild.members.me.roles.highest.position <=
             Target.roles.highest.position
           )
-            return 
-            interaction.followUp({
-              embeds: [
-                new EmbedBuilder()
-                  .setColor(client.color)
-                  .setDescription(
-                    `The member you're trying to manage is higher than me in roles!`
-                  ),
-              ],
-              ephemeral: true,
-            });
+            return;
+          interaction.followUp({
+            embeds: [
+              new EmbedBuilder()
+                .setColor(client.color)
+                .setDescription(
+                  `The member you're trying to manage is higher than me in roles!`
+                ),
+            ],
+            ephemeral: true,
+          });
 
-          if (!Target.roles.cache.find(r => r.id === Role.id))
+          if (!Target.roles.cache.find((r) => r.id === Role.id))
             return interaction.followUp({
               embeds: [
                 new EmbedBuilder()
@@ -144,7 +135,7 @@ module.exports = {
                   ),
               ],
               ephemeral: true,
-            }); 
+            });
 
           await Target.roles.remove(Role);
 
@@ -163,26 +154,24 @@ module.exports = {
 
       case "give-all":
         {
-          const Members = guild.members.cache.filter(m => !m.user.bot);
+          const Members = guild.members.cache.filter((m) => !m.user.bot);
 
           interaction.followUp({
             embeds: [
               new EmbedBuilder()
                 .setColor(client.color)
-                .setDescription(
-                  `Everyone now has the role, **${Role.name}**!`
-                ),
+                .setDescription(`Everyone now has the role, **${Role.name}**!`),
             ],
             ephemeral: true,
           });
 
-          await Members.forEach(m => m.roles.add(Role));
+          await Members.forEach((m) => m.roles.add(Role));
         }
         break;
 
       case "remove-all":
         {
-          const Members = guild.members.cache.filter(m => !m.user.bot);
+          const Members = guild.members.cache.filter((m) => !m.user.bot);
 
           interaction.followUp({
             embeds: [
@@ -194,7 +183,7 @@ module.exports = {
             ],
             ephemeral: true,
           });
-          await Members.forEach(m => m.roles.remove(Role));
+          await Members.forEach((m) => m.roles.remove(Role));
         }
         break;
     }
