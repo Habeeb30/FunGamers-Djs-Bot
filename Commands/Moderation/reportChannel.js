@@ -12,6 +12,7 @@ module.exports = {
     .setName("reportchannel")
     .setDescription("Set the channel to get reports to !")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+    .setDMPermission(false)
     .addChannelOption((channel) => {
       return channel
         .setName("channel")

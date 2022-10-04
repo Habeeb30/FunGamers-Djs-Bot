@@ -10,6 +10,7 @@ module.exports = {
     .setName("setup-verification")
     .setDescription("Setup the verification channel bot!")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+    .setDMPermission(false)
     .addChannelOption((option) =>
       option
         .setName("channel")

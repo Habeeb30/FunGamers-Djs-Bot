@@ -13,6 +13,7 @@ module.exports = {
     .setName("setrole-verification")
     .setDescription("Sets the verification Role!")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+    .setDMPermission(false)
     .addRoleOption((option) =>
       option
         .setName("role")

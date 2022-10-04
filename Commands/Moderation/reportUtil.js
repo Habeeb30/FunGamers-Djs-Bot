@@ -12,6 +12,7 @@ module.exports = {
     .setName("reportutil")
     .setDescription("Settings for the report command!")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+    .setDMPermission(false)
     .addSubcommand((subcommand) =>
       subcommand
         .setName("remove")
