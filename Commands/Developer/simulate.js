@@ -1,4 +1,5 @@
 const {
+  SlashCommandBuilder,
   Client,
   ChatInputCommandInteraction,
   ApplicationCommandOptionType,
@@ -6,34 +7,27 @@ const {
 
 const EditReply = require("../../Functions/EditReply");
 
-const data = {
-  name: "simulate",
-  description: "Simulate the join & leave events",
-  options: [
-    {
-      name: "options",
-      description: "Choose an option",
-      type: ApplicationCommandOptionType.String,
-      required: true,
-      choices: [
-        {
-          name: "Join",
-          value: "join",
-        },
-        {
-          name: "Leave",
-          value: "leave",
-        },
-      ],
-    },
-  ],
-  category: "Developer",
-  toJSON: () => ({ ...data }),
-};
-
 module.exports = {
-  data,
-  ...data,
+  data: new SlashCommandBuilder()
+    .setName("simulate")
+    .setDescription("Simulate the join & leave events")
+    .setDMPermission(false)
+    .addStringOption((options) =>
+      options
+        .setName("options")
+        .setDescription("Choose an option")
+        .setRequired(true)
+        .addChoices(
+          {
+            name: "Join",
+            value: "join",
+          },
+          {
+            name: "Leave",
+            value: "leave",
+          }
+        )
+    ),
   /**
    * @param {ChatInputCommandInteraction} interaction
    * @param {Client} client
