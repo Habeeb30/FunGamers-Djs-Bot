@@ -1,4 +1,5 @@
 const {
+  Client,
   SlashCommandBuilder,
   ChatInputCommandInteraction,
   EmbedBuilder,
@@ -15,8 +16,9 @@ module.exports = {
     .setDMPermission(false),
   /**
    * @param {ChatInputCommandInteraction} interaction
+   * @param {Client} client
    */
-  async execute(interaction) {
+  async execute(interaction, client) {
     const { guild } = interaction;
     const { members, channels, emojis, roles, stickers } = guild;
 
@@ -74,7 +76,7 @@ module.exports = {
     interaction.reply({
       embeds: [
         new EmbedBuilder()
-          .setColor(members.me.roles.highest.hexColor)
+          .setColor(client.color)
           .setTitle(`${guild.name}'s Information`)
           .setThumbnail(guild.iconURL({ size: 1024 }))
           .setImage(guild.bannerURL({ size: 1024 }))
