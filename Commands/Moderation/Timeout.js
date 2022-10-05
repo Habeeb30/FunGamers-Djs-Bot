@@ -72,16 +72,18 @@ module.exports = {
         embeds: [errorsEmbed.setDescription(errorsArray.join("\n"))],
         ephemeral: true,
       });
-    target.timeout(ms(duration), reason).catch((err) => {
-      interaction.reply({
+    let timeError = false;
+    await target.timeout(ms(duration), reason).catch(() => (timeError = true));
+
+    if (timeError)
+      return interaction.reply({
         embeds: [
           errorsEmbed.setDescription(
-            "Could not timeout user due to an uncommon error."
+            "Could not timeout user due to an uncommon error. Cannot take negative values"
           ),
         ],
+        ephemeral: true,
       });
-      return console.log("Error occurred in Timeout.js", err);
-    });
 
     const newInfarctionsObject = {
       IssuerID: member.id,

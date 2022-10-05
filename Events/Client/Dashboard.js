@@ -37,13 +37,13 @@ module.exports = {
     DBD.Dashboard = DBD.UpdatedClass();
 
     const Dashboard = new DBD.Dashboard({
-      port: 4971,
+      port: 443,
       client: {
         id: process.env.CLIENT_ID,
         secret: process.env.CLIENT_SECRET,
       },
-      redirectUri: "http://xyz.daki.cc:4971/discord/callback",
-      domain: "http://xyz.daki.cc",
+      redirectUri: "https://dash.fungamers.xyz/discord/callback",
+      domain: "https://dash.fungamers.xyz",
       useThemeMaintenance: true,
       useTheme404: true,
       bot: client,
@@ -68,9 +68,9 @@ module.exports = {
           createdBy: "Habeeb M",
           websiteTitle: "FunGamers",
           websiteName: "FunGamers",
-          websiteUrl: "http://xyz.daki.cc:4971/",
-          dashboardUrl: "http://xyz.daki.cc:4971/",
-          supporteMail: "support@",
+          websiteUrl: "https://dash.fungamers.xyz/",
+          dashboardUrl: "https://dash.fungamers.xyz/",
+          supporteMail: "support@fungamers.xyz",
           supportServer: "https://discord.gg/yYq4UgRRzz",
           imageFavicon: "https://i.ibb.co/r7ZDcNB/My-FG-Logo.jpg",
           iconURL: "https://i.ibb.co/r7ZDcNB/My-FG-Logo.jpg",
