@@ -99,7 +99,7 @@ module.exports = {
         User: target.id,
         Infarctions: [newInfarctionsObject],
       });
-    else userData.Infarctions.push(newInfarctionsObject)(await userData.save());
+    else userData.Infarctions.push(newInfarctionsObject) && (await userData.save());
 
     const successEmbed = new EmbedBuilder()
       .setAuthor({ name: "Timeout Issued", iconURL: guild.iconURL() })
