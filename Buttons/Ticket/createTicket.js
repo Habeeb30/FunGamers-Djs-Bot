@@ -1,4 +1,5 @@
 const {
+  Client,
   EmbedBuilder,
   ButtonBuilder,
   ButtonStyle,
@@ -12,10 +13,10 @@ const TicketCount = require("../../Schemas/TicketCount");
 module.exports = {
   id: "createTicket",
   /**
-   *
+   * @param {Client} client
    * @param {ChatInputCommandInteraction} interaction
    */
-  async execute(interaction) {
+  async execute(interaction, client) {
     const { guild, member } = interaction;
     const i = interaction;
 

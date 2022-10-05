@@ -1,4 +1,5 @@
 const {
+  Client,
   EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
@@ -10,10 +11,10 @@ const TicketSetup = require("../../Schemas/TicketSetup");
 module.exports = {
   id: "archive_ticket",
   /**
-   *
+   * @param {Client} client
    * @param {ChatInputCommandInteraction} interaction
    */
-  async execute(interaction) {
+  async execute(interaction, client) {
     const { guild, channel, member, message } = interaction;
     const i = interaction;
 

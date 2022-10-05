@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require("discord.js");
+const { EmbedBuilder, Client } = require("discord.js");
 const Tickets = require("../../Schemas/Tickets");
 const TicketSetup = require("../../Schemas/TicketSetup");
 const TicketCount = require("../../Schemas/TicketCount");
@@ -7,10 +7,10 @@ const { createTranscript } = require("discord-html-transcripts");
 module.exports = {
   id: "delete_ticket",
   /**
-   *
+   * @param {Client} client
    * @param {ChatInputCommandInteraction} interaction
    */
-  async execute(interaction) {
+  async execute(interaction, client) {
     const { guild, channel, member } = interaction;
     const i = interaction;
 

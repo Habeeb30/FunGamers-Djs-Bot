@@ -1,4 +1,5 @@
 const {
+  Client,
   SlashCommandBuilder,
   EmbedBuilder,
   ChannelType,
@@ -14,7 +15,7 @@ const TicketCount = require("../../Schemas/TicketCount");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("ticket")
-    .setDescription("Configue the ticket system")
+    .setDescription("Configure the ticket system")
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .addSubcommand((subcommand) =>
       subcommand
@@ -119,6 +120,7 @@ module.exports = {
         })
     ),
   /**
+   * @param {Client} client
    * @param {ChatInputCommandInteraction} interaction
    */
   async execute(interaction, client) {
