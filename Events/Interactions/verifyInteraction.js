@@ -26,7 +26,7 @@ module.exports = {
   async execute(interaction, client) {
     if (interaction.isChatInputCommand()) {
       switch (interaction.commandName) {
-        case "setup":
+        case "setup-verification":
           const channel = interaction.options.getChannel("channel");
           const description =
             interaction.options.getString("description") ||
