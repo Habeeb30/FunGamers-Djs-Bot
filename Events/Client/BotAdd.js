@@ -47,13 +47,13 @@ module.exports = {
       new ButtonBuilder()
         .setStyle(ButtonStyle.Link)
         .setURL(
-          "https://discord.com/api/oauth2/authorize?client_id=924200727646195732&scope=applications.commands+bot&permissions=66321471"
+          "https://discord.com/api/oauth2/authorize?client_id=924200727646195732&scope=applications.commands+bot&permissions=1099511627775"
         )
         .setLabel("Invite Me"),
 
       new ButtonBuilder()
         .setStyle(ButtonStyle.Link)
-        .setURL("https://youtube.com/FUNGAMERS-FG")
+        .setURL("https://dash.fungamers.xyz/")
         .setLabel("Dashboard")
     );
 
