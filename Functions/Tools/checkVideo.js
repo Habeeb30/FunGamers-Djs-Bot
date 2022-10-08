@@ -24,7 +24,7 @@ module.exports = (client) => {
       const guild = await client.guilds
         .fetch("1027620951938043935")
         .catch(console.error);
-      const channel = await guild.channels
+      const channel = await guild.channel
         .fetch("1027620953489944577")
         .catch(console.error);
 
