@@ -21,6 +21,7 @@ module.exports = {
       activities: [{ name: "/help", type: ActivityType.Listening }],
       status: "dnd",
     });
+    setTimeout(client.checkVideo, 5 * 1000);
 
     if (!Database_URI) return;
     mongoose
