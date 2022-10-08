@@ -1,6 +1,5 @@
 const chalk = require("chalk");
 const { loadCommands } = require("../../Handlers/commandHandler");
-const { checkVideo } = require("../../Functions/Tools/checkVideo");
 const { Client, ActivityType } = require("discord.js");
 const mongoose = require("mongoose");
 const { Database_URI } = process.env;
@@ -15,9 +14,7 @@ module.exports = {
    */
   async execute(client) {
     console.log(chalk.yellow(`✅ >>> Ready! Logged in as ${client.user.tag}`));
-    setTimeout(() => {
-      setTimeout(client.checkVideo(), 5 * 1000);
-    }, timeout);
+    setTimeout(client.checkVideo(), 5 * 1000);
 
     loadCommands(client);
 
