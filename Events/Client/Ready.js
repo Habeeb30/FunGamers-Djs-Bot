@@ -14,7 +14,9 @@ module.exports = {
    */
   async execute(client) {
     console.log(chalk.yellow(`✅ >>> Ready! Logged in as ${client.user.tag}`));
-    setTimeout(client.checkVideo, 5 * 1000);
+    setTimeout(() => {
+      setTimeout(client.checkVideo, 5 * 1000);
+    }, timeout);
 
     loadCommands(client);
 
