@@ -87,6 +87,12 @@ module.exports = {
             image: "https://i.imgur.com/axnP93g.png",
             footer: "The Bot by Habeeb M",
           },
+          custom_html: {
+            head: "<meta name=`description` content=`Dashboard For MultiPurpose FunGamers Discord Bot.`\>",
+            head: "<meta name=`author` content=`Habeeb M`\>",
+            head: "<meta name=`keywords` content=`fungamers, discord bot, fungamers discord bot, FunGamers youtube, fg, tnrp, funagmers tnrp, fg bot, funagmers bot`\>",
+            body: "",
+          },
 
           information: {
             category: "About",
