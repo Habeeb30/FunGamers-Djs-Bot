@@ -60,7 +60,7 @@ module.exports = {
       invite: {
         clientId: client.user.id,
         scopes: ["bot", "applications.commands", "guilds", "identify"],
-        permissions: "1099511627775",
+        permissions: "4391536426743",
         redirectUrl: "https://discord.gg/K3TGfHnvfP",
       },
       theme: DarkDashboard({
