@@ -107,13 +107,12 @@ module.exports = {
           }
           if (
             interaction.member.roles.highest.position >
-            interaction.me.roles.highest.position
+            interaction.me.highest.position
           )
             return interaction.reply({
               embeds: [
                 new EmbedBuilder().setDescription(
-                  `${(role) =>
-                    role.id === verifyRoleId.roleId} is higher than me`
+                  `<@&${roleId}> is higher than me`
                 ),
               ],
             });
