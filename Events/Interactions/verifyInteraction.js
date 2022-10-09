@@ -24,8 +24,6 @@ module.exports = {
    * @param {CommandInteraction} interaction
    */
   async execute(interaction, client) {
-    const { member } = interaction;
-
     if (interaction.isChatInputCommand()) {
       switch (interaction.commandName) {
         case "setup-verification":
@@ -107,7 +105,7 @@ module.exports = {
           }
           if (
             interaction.member.roles.highest.position >
-            interaction.me.highest.position
+            interaction.guild.members.me.roles.highest.position
           )
             return interaction.reply({
               embeds: [
