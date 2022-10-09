@@ -103,17 +103,6 @@ module.exports = {
             });
             return;
           }
-          if (
-            interaction.member.roles.highest.position >
-            interaction.guild.members.me.roles.highest.position
-          )
-            return interaction.reply({
-              embeds: [
-                new EmbedBuilder().setDescription(
-                  `<@&${roleId}> is higher than me`
-                ),
-              ],
-            });
 
           const modal = new ModalBuilder()
             .setCustomId("verifyUserModal")
