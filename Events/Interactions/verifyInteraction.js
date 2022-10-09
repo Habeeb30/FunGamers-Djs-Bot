@@ -24,6 +24,8 @@ module.exports = {
    * @param {CommandInteraction} interaction
    */
   async execute(interaction, client) {
+    const { member } = interaction;
+
     if (interaction.isChatInputCommand()) {
       switch (interaction.commandName) {
         case "setup-verification":
@@ -103,6 +105,18 @@ module.exports = {
             });
             return;
           }
+          if (
+            interaction.member.roles.highest.position >
+            interaction.me.roles.highest.position
+          )
+            return interaction.reply({
+              embeds: [
+                new EmbedBuilder().setDescription(
+                  `${(role) =>
+                    role.id === verifyRoleId.roleId} is higher than me`
+                ),
+              ],
+            });
 
           const modal = new ModalBuilder()
             .setCustomId("verifyUserModal")
