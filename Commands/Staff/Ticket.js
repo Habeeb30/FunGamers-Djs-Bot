@@ -268,7 +268,7 @@ module.exports = {
             return i.reply({
               embeds: [
                 new EmbedBuilder()
-                  .setColor(client.color)
+                  .setColor("#303135")
                   .setDescription(`Ticket setup has been deleted`),
               ],
               ephemeral: true,
@@ -288,7 +288,7 @@ module.exports = {
             return i.reply({
               embeds: [
                 new EmbedBuilder()
-                  .setColor(client.color)
+                  .setColor("#303135")
                   .setDescription(`Tickets has been deleted`),
               ],
               ephemeral: true,
@@ -308,7 +308,7 @@ module.exports = {
             return i.reply({
               embeds: [
                 new EmbedBuilder()
-                  .setColor(client.color)
+                  .setColor("#303135")
                   .setDescription(`Ticket count has been deleted`),
               ],
               ephemeral: true,
