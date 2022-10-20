@@ -27,6 +27,11 @@ module.exports = {
           `https://discord.com/api/oauth2/authorize?client_id=924200727646195732&scope=applications.commands+bot&permissions=4391536426743`
         ),
       new ButtonBuilder()
+        .setLabel("Dashboard")
+        .setEmoji("🎃")
+        .setStyle(ButtonStyle.Link)
+        .setURL("https://discord.gg/K3TGfHnvfP"),
+      new ButtonBuilder()
         .setLabel("Support")
         .setEmoji("🆘")
         .setStyle(ButtonStyle.Link)
@@ -43,7 +48,7 @@ module.exports = {
       .addFields([
         {
           name: "Creator",
-          value: "[Habeeb M#0708](https://github.com/Habeeb30)",
+          value: "[Habeeb M](https://github.com/Habeeb30)",
         },
         {
           name: "Maintainer",
