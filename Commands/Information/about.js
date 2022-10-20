@@ -30,7 +30,7 @@ module.exports = {
         .setLabel("Dashboard")
         .setEmoji("🎃")
         .setStyle(ButtonStyle.Link)
-        .setURL("https://discord.gg/K3TGfHnvfP"),
+        .setURL("https://dash.fungamers.xyz/"),
       new ButtonBuilder()
         .setLabel("Support")
         .setEmoji("🆘")
