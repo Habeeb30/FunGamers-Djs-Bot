@@ -35,7 +35,12 @@ module.exports = {
         .setLabel("Support")
         .setEmoji("🆘")
         .setStyle(ButtonStyle.Link)
-        .setURL("https://discord.gg/K3TGfHnvfP")
+        .setURL("https://discord.gg/K3TGfHnvfP"),
+      new ButtonBuilder()
+        .setLabel("VoteUs")
+        .setEmoji("🗳")
+        .setStyle(ButtonStyle.Link)
+        .setURL("https://top.gg/bot/924200727646195732")
     );
 
     const mainPage = new EmbedBuilder()
