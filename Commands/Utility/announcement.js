@@ -45,19 +45,22 @@ module.exports = {
       .setLabel("Image")
       .setStyle(TextInputStyle.Short)
       .setPlaceholder("Ex: https://i.ibb.co/r7ZDcNB/My-FG-Logo.jpg")
-      .setRequired(false);
+      .setRequired(true);
+
     const setAuthor_n = new TextInputBuilder()
       .setCustomId("setAuthor_n")
       .setLabel("Author Name")
       .setStyle(TextInputStyle.Short)
       .setPlaceholder("Ex: Habeeb M")
       .setRequired(true);
+
     const setAuthor_u = new TextInputBuilder()
       .setCustomId("setAuthor_u")
       .setLabel("Author iconURL")
       .setStyle(TextInputStyle.Short)
       .setPlaceholder("Ex: https://i.ibb.co/r7ZDcNB/My-FG-Logo.jpg")
-      .setRequired(false);
+      .setRequired(true);
+
     const Row = new ActionRowBuilder().addComponents(messageInput);
     const Row2 = new ActionRowBuilder().addComponents(setTitle);
     const Row4 = new ActionRowBuilder().addComponents(setImage);
