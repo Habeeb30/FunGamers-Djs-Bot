@@ -16,6 +16,10 @@ module.exports = {
   async execute(interaction, client) {
     const { type, customId, channel, guild, user, fields } = interaction;
 
+    const errorsEmbed = new EmbedBuilder()
+      .setAuthor({ name: "Could not send announcement due to" })
+      .setColor(client.color);
+
     if (type !== InteractionType.ModalSubmit) return;
     if (!guild || user.bot) return;
 
@@ -25,9 +29,27 @@ module.exports = {
 
     const messageInput = fields.getTextInputValue("message-input");
     const setTitle = fields.getTextInputValue("setTitle");
-    const setImage = fields.getTextInputValue("setImage");
+    const setImage =
+      fields.getTextInputValue("setImage") ||
+      "https://i.ibb.co/DCfF2VL/announcement-image.jpg";
     const setAuthor_n = fields.getTextInputValue("setAuthor_n");
-    const setAuthor_u = fields.getTextInputValue("setAuthor_u");
+    const setAuthor_u =
+      fields.getTextInputValue("setAuthor_u") ||
+      "https://i.ibb.co/fxprfVh/default-profile.jpg";
+
+    if (!isValidUrl(setImage))
+      // If it is a valid Image it runs
+      return interaction.editReply({
+        embeds: [errorsEmbed.setDescription("IMAGE URL is not valid")],
+        ephemeral: true,
+      });
+
+    if (!isValidUrl(setAuthor_u))
+      // If it is a valid Image it runs
+      return interaction.editReply({
+        embeds: [errorsEmbed.setDescription("IMAGE URL is not valid")],
+        ephemeral: true,
+      });
 
     const Embed = new EmbedBuilder()
       .setColor(client.color)
@@ -53,4 +75,16 @@ module.exports = {
         await msg.react("⬇");
       });
   },
+};
+const isValidUrl = (urlString) => {
+  var urlPattern = new RegExp(
+    "^(https?:\\/\\/)?" + // validate protocol
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // validate domain name
+      "((\\d{1,3}\\.){3}\\d{1,3}))" + // validate OR ip (v4) address
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // validate port and path
+      "(\\?[;&a-z\\d%_.~+=-]*)?" + // validate query string
+      "(\\#[-a-z\\d_]*)?$",
+    "i"
+  ); // validate fragment locator
+  return !!urlPattern.test(urlString);
 };
