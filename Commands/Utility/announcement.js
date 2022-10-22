@@ -26,18 +26,18 @@ module.exports = {
       .setCustomId("announce-modal")
       .setTitle("Announcement");
 
-    const messageInput = new TextInputBuilder()
-      .setCustomId("message-input")
-      .setLabel("Message")
-      .setStyle(TextInputStyle.Paragraph)
-      .setPlaceholder("Enter The Announcement message")
-      .setRequired(true);
-
     const setTitle = new TextInputBuilder()
       .setCustomId("setTitle")
       .setLabel("Title")
       .setStyle(TextInputStyle.Short)
       .setPlaceholder("Enter The Announcement title")
+      .setRequired(false);
+
+    const messageInput = new TextInputBuilder()
+      .setCustomId("message-input")
+      .setLabel("Message")
+      .setStyle(TextInputStyle.Paragraph)
+      .setPlaceholder("Enter The Announcement message")
       .setRequired(true);
 
     const setImage = new TextInputBuilder()
@@ -52,7 +52,7 @@ module.exports = {
       .setLabel("Author Name")
       .setStyle(TextInputStyle.Short)
       .setPlaceholder("Ex: Habeeb M")
-      .setRequired(true);
+      .setRequired(false);
 
     const setAuthor_u = new TextInputBuilder()
       .setCustomId("setAuthor_u")
@@ -61,8 +61,8 @@ module.exports = {
       .setPlaceholder("Ex: https://i.ibb.co/r7ZDcNB/My-FG-Logo.jpg")
       .setRequired(false);
 
-    const Row = new ActionRowBuilder().addComponents(messageInput);
-    const Row2 = new ActionRowBuilder().addComponents(setTitle);
+    const Row = new ActionRowBuilder().addComponents(setTitle);
+    const Row2 = new ActionRowBuilder().addComponents(messageInput);
     const Row4 = new ActionRowBuilder().addComponents(setImage);
     const Row5 = new ActionRowBuilder().addComponents(setAuthor_n);
     const Row6 = new ActionRowBuilder().addComponents(setAuthor_u);

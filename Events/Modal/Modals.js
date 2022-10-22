@@ -27,15 +27,15 @@ module.exports = {
 
     await interaction.deferReply({ ephemeral: true });
 
+    const setTitle = fields.getTextInputValue("setTitle") || "New Announcement";
     const messageInput = fields.getTextInputValue("message-input");
-    const setTitle = fields.getTextInputValue("setTitle");
     const setImage =
       fields.getTextInputValue("setImage") ||
       "https://i.ibb.co/DCfF2VL/announcement-image.jpg";
-    const setAuthor_n = fields.getTextInputValue("setAuthor_n");
+    const setAuthor_n =
+      fields.getTextInputValue("setAuthor_n") || `${user.username}`;
     const setAuthor_u =
-      fields.getTextInputValue("setAuthor_u") ||
-      "https://i.ibb.co/fxprfVh/default-profile.jpg";
+      fields.getTextInputValue("setAuthor_u") || `${user.displayAvatarURL()}`;
 
     if (!isValidUrl(setImage))
       // If it is a valid Image it runs
