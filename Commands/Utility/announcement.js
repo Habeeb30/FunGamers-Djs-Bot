@@ -45,7 +45,7 @@ module.exports = {
       .setLabel("Image")
       .setStyle(TextInputStyle.Short)
       .setPlaceholder("Ex: https://i.ibb.co/r7ZDcNB/My-FG-Logo.jpg")
-      .setRequired(true);
+      .setRequired(false);
     const setAuthor_n = new TextInputBuilder()
       .setCustomId("setAuthor_n")
       .setLabel("Author Name")
@@ -57,7 +57,7 @@ module.exports = {
       .setLabel("Author iconURL")
       .setStyle(TextInputStyle.Short)
       .setPlaceholder("Ex: https://i.ibb.co/r7ZDcNB/My-FG-Logo.jpg")
-      .setRequired(true);
+      .setRequired(false);
     const Row = new ActionRowBuilder().addComponents(messageInput);
     const Row2 = new ActionRowBuilder().addComponents(setTitle);
     const Row4 = new ActionRowBuilder().addComponents(setImage);
