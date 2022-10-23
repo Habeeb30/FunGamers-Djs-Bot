@@ -19,6 +19,7 @@ module.exports = {
         .setRequired(true)
         .setDescription("Channel to send the message to.");
     }),
+  category: "Moderation",
 
   /**
    * @param {ChatInputCommandInteraction} interaction

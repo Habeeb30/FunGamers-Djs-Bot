@@ -9,6 +9,7 @@ module.exports = {
   data: new ContextMenuCommandBuilder()
     .setName("report")
     .setType(ApplicationCommandType.User),
+  category: "Public",
 
   /**
    *

@@ -119,6 +119,7 @@ module.exports = {
             .setRequired(true);
         })
     ),
+  category: "Staff",
   /**
    * @param {Client} client
    * @param {ChatInputCommandInteraction} interaction

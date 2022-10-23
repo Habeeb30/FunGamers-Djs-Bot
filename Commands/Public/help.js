@@ -16,6 +16,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("help")
     .setDescription("Sends the command list!"),
+  category: "Public",
 
   /**
    *

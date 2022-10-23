@@ -36,6 +36,7 @@ module.exports = {
         .setDescription("Select the user to manage roles")
         .setRequired(false)
     ),
+  category: "Moderation",
   /**
    *
    * @param {ChatInputCommandInteraction} interaction

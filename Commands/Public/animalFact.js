@@ -31,6 +31,7 @@ const data = {
 module.exports = {
   data,
   ...data,
+  category: "Public",
   /**
    * @param {ChatInputCommandInteraction} interaction
    * @param {Client} client

@@ -25,6 +25,7 @@ module.exports = {
         .setRequired(true)
         .setMinValue(1);
     }),
+  category: "Public",
 
   /**
    *

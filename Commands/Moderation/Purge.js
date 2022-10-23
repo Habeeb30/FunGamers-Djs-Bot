@@ -1,5 +1,7 @@
 const {
   SlashCommandBuilder,
+  ChatInputCommandInteraction,
+  Client,
   PermissionFlagsBits,
   EmbedBuilder,
 } = require("discord.js");
@@ -50,6 +52,11 @@ module.exports = {
             .setRequired(true)
         )
     ),
+  category: "Moderation",
+  /**
+   * @param {ChatInputCommandInteraction} interaction
+   * @param {Client} client
+   */
   async execute(interaction, client) {
     let amount = interaction.options.getInteger("count");
     if (amount > 100) amount = 100;

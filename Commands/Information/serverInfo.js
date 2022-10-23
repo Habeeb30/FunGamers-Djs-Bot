@@ -14,6 +14,7 @@ module.exports = {
     .setName("serverinfo")
     .setDescription("Displays information about the server.")
     .setDMPermission(false),
+  category: "Information",
   /**
    * @param {ChatInputCommandInteraction} interaction
    * @param {Client} client

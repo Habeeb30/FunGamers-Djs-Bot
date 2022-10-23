@@ -35,6 +35,7 @@ module.exports = {
             .addChannelTypes(ChannelType.GuildText)
         )
     ),
+  category: "Moderation",
 
   /**
    *

@@ -30,6 +30,7 @@ module.exports = {
         .setDescription("The verification system title")
         .setRequired(false);
     }),
+  category: "Staff",
 
   /**
    *

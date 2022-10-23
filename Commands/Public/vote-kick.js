@@ -16,6 +16,7 @@ module.exports = {
         .setDescription("Select the member you want to kick.")
         .setRequired(true)
     ),
+  category: "Public",
 
   async execute(interaction) {
     const { member, options } = interaction;

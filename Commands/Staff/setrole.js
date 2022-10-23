@@ -20,6 +20,7 @@ module.exports = {
         .setDescription("Role to set the verification role to.")
         .setRequired(true)
     ),
+  category: "Staff",
 
   /**
    *

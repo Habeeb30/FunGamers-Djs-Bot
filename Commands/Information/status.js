@@ -10,6 +10,7 @@ module.exports = {
     .setDescription(
       "Displays the status of the client and database connection."
     ),
+    category: "Information",
   /**
    *
    * @param {ChatInputCommandInteraction} interaction
