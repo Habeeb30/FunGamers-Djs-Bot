@@ -1,4 +1,10 @@
-const { Client } = require("discord.js");
+const {
+  GuildMember,
+  Embed,
+  InteractionCollector,
+  Client,
+  EmbedBuilder,
+} = require("discord.js");
 const Schema = require("../../Schemas/AIChat");
 const axios = require("axios");
 module.exports = {

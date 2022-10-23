@@ -1,49 +1,54 @@
 const {
+  Message,
+  Client,
   SlashCommandBuilder,
-  ChatInputCommandInteraction,
   PermissionFlagsBits,
 } = require("discord.js");
 const welcomeSchema = require("../../Schemas/AIChat");
+const { model, Schema } = require("mongoose");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("setup-ai-chat")
-    .setDescription("Set up your AIChat System.")
+    .setDescription("Set up your AI Chat System.")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addChannelOption((option) =>
       option
         .setName("channel")
-        .setDescription("Channel for welcome messages.")
+        .setDescription("Channel for chat messages.")
         .setRequired(true)
     ),
-  category: "Utility",
-  /**
-   *
-   * @param {ChatInputCommandInteraction} interaction
-   */
+
   async execute(interaction) {
-    const { guild, options } = interaction;
+    const { channel, options } = interaction;
 
     const welcomeChannel = options.getChannel("channel");
 
-    if (!guild.members.me.permissions.has(PermissionFlagsBits.SendMessages)) {
+    if (
+      !interaction.guild.members.me.permissions.has(
+        PermissionFlagsBits.SendMessages
+      )
+    ) {
       interaction.reply({
         content: "I don't have permissions for this.",
         ephemeral: true,
       });
     }
 
-    welcomeSchema.findOne({ Guild: guild.id }, async (err, data) => {
-      if (!data) {
-        const newWelcome = await welcomeSchema.create({
-          Guild: guild.id,
-          Channel: welcomeChannel.id,
+    welcomeSchema.findOne(
+      { Guild: interaction.guild.id },
+      async (err, data) => {
+        if (!data) {
+          const newWelcome = await welcomeSchema.create({
+            Guild: interaction.guild.id,
+            Channel: welcomeChannel.id,
+          });
+        }
+        interaction.reply({
+          content: "Successfully created AIChat System",
+          ephemeral: true,
         });
       }
-      interaction.reply({
-        content: "Successfully created Chatbot",
-        ephemeral: true,
-      });
-    });
+    );
   },
 };
