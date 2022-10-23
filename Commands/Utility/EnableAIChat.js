@@ -1,11 +1,9 @@
 const {
-  Message,
-  Client,
   SlashCommandBuilder,
+  ChatInputCommandInteraction,
   PermissionFlagsBits,
 } = require("discord.js");
-const welcomeSchema = require("../../Schemas/AIChat");
-const { model, Schema } = require("mongoose");
+const AI = require("../../Schemas/AIChat");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -18,11 +16,16 @@ module.exports = {
         .setDescription("Channel for chat messages.")
         .setRequired(true)
     ),
+  category: "Utility",
+  /**
+   *
+   * @param {ChatInputCommandInteraction} interaction
+   */
 
   async execute(interaction) {
-    const { channel, options } = interaction;
+    const { guild, options } = interaction;
 
-    const welcomeChannel = options.getChannel("channel");
+    const chatChannel = options.getChannel("channel");
 
     if (
       !interaction.guild.members.me.permissions.has(
@@ -35,20 +38,17 @@ module.exports = {
       });
     }
 
-    welcomeSchema.findOne(
-      { Guild: interaction.guild.id },
-      async (err, data) => {
-        if (!data) {
-          const newWelcome = await welcomeSchema.create({
-            Guild: interaction.guild.id,
-            Channel: welcomeChannel.id,
-          });
-        }
-        interaction.reply({
-          content: "Successfully created AIChat System",
-          ephemeral: true,
+    AI.findOne({ Guild: guild.id }, async (err, data) => {
+      if (!data) {
+        const newWelcome = await AI.create({
+          Guild: guild.id,
+          Channel: chatChannel.id,
         });
       }
-    );
+      interaction.reply({
+        content: "Successfully created AIChat System",
+        ephemeral: true,
+      });
+    });
   },
 };

@@ -1,27 +1,20 @@
-const {
-  GuildMember,
-  Embed,
-  InteractionCollector,
-  Client,
-  EmbedBuilder,
-} = require("discord.js");
+const { Client } = require("discord.js");
 const Schema = require("../../Schemas/AIChat");
 const axios = require("axios");
 module.exports = {
   name: "messageCreate",
   /**
-   *
    * @param {Client} client
    */
   async execute(message, client) {
     const data = Schema.findOne(
       { Guild: message.guild.id },
       async (err, data) => {
-        if (!data) return message.author.send("Enable AIChat System");
+        if (!data) return;
         if (message.channel.id !== data.Channel) return;
         let channel = data.Channel;
 
-        const chatbot = message.guild.channels.cache.get(data.Channel);
+        const chatbot = message.guild.channels.cache.get(channel);
         if (!chatbot) {
           return;
         } else {
