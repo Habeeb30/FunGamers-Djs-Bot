@@ -6,12 +6,23 @@ const {
 } = require("discord.js");
 require("dotenv").config();
 const { Token } = process.env;
-const { Guilds, GuildMembers, GuildMessages, GuildMessageReactions } =
-  GatewayIntentBits;
+const {
+  Guilds,
+  GuildMembers,
+  GuildMessages,
+  GuildMessageReactions,
+  MessageContent,
+} = GatewayIntentBits;
 const { User, Message, GuildMember, ThreadMember } = Partials;
 
 const client = new Client({
-  intents: [Guilds, GuildMembers, GuildMessages, GuildMessageReactions],
+  intents: [
+    Guilds,
+    GuildMembers,
+    GuildMessages,
+    GuildMessageReactions,
+    MessageContent,
+  ],
   partials: [User, Message, GuildMember, ThreadMember],
 });
 const { promisify } = require("util");
