@@ -5,6 +5,7 @@ const leaveSchema = require("../../Schemas/leaveSchema");
 const joinSchema = require("../../Schemas/joinSchema");
 const GeneralLogsDB = require("../../Schemas/LogsChannel");
 const LogsSwitchDB = require("../../Schemas/GeneralLogs");
+const AI = require("../../Schemas/AIChat");
 
 module.exports = {
   name: "ready",
@@ -88,9 +89,9 @@ module.exports = {
             footer: "The Bot by Habeeb M",
           },
           custom_html: {
-            head: "<meta name=`description` content=`Dashboard For MultiPurpose FunGamers Discord Bot.`\>",
-            head: "<meta name=`author` content=`Habeeb M`\>",
-            head: "<meta name=`keywords` content=`fungamers, discord bot, fungamers discord bot, FunGamers youtube, fg, tnrp, funagmers tnrp, fg bot, funagmers bot`\>",
+            head: "<meta name=`description` content=`Dashboard For MultiPurpose FunGamers Discord Bot.`>",
+            head: "<meta name=`author` content=`Habeeb M`>",
+            head: "<meta name=`keywords` content=`fungamers, discord bot, fungamers discord bot, FunGamers youtube, fg, tnrp, funagmers tnrp, fg bot, funagmers bot`>",
             body: "",
           },
 
@@ -798,6 +799,53 @@ module.exports = {
                   await data.save();
                 } else {
                   data.Invite = newData;
+                  await data.save();
+                }
+                return;
+              },
+            },
+          ],
+        },
+
+        // AI Chat System
+
+        {
+          categoryId: "ai-chat-system",
+          categoryName: "AI-Chat System",
+          categoryDescription: "Setup the AI Chat channel",
+          categoryOptionsList: [
+            // AIChat Channel
+            {
+              optionId: "aich",
+              optionName: "AI-Chat Channel",
+              optionDescription: "Set or reset the server's ai chat channel",
+              optionType: DBD.formTypes.channelsSelect(
+                false,
+                (ChannelTypes = [ChannelType.GuildText])
+              ),
+              getActualSet: async ({ guild }) => {
+                let data = await AI.findOne({ Guild: guild.id }).catch(
+                  (err) => {}
+                );
+                if (data) return data.Channel;
+                else return null;
+              },
+              setNew: async ({ guild, newData }) => {
+                let data = await AI.findOne({ Guild: guild.id }).catch(
+                  (err) => {}
+                );
+
+                if (!newData) newData = null;
+
+                if (!data) {
+                  data = new AI({
+                    Guild: guild.id,
+                    Channel: newData,
+                  });
+
+                  await data.save();
+                } else {
+                  data.Channel = newData;
                   await data.save();
                 }
                 return;
