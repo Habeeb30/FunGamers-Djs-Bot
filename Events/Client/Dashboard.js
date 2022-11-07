@@ -874,28 +874,28 @@ module.exports = {
               ),
               getActualSet: async ({ guild }) => {
                 let data = await verifySchema
-                  .findOne({ guildId: guild.id })
+                  .findOne({ Guild: guild.id })
                   .catch((err) => {});
-                if (data) return data.channelId;
+                if (data) return data.Channel;
                 else return null;
               },
               setNew: async ({ guild, newData }) => {
                 let data = await verifySchema
-                  .findOne({ guildId: guild.id })
+                  .findOne({ Guild: guild.id })
                   .catch((err) => {});
 
                 if (!newData) newData = null;
 
                 if (!data) {
                   data = new verifySchema({
-                    guildId: guild.id,
-                    channelId: newData,
-                    roleId: null,
+                    Guild: guild.id,
+                    Channel: newData,
+                    Role: null,
                   });
 
                   await data.save();
                 } else {
-                  data.channelId = newData;
+                  data.Channel = newData;
                   await data.save();
                 }
                 return;
@@ -903,35 +903,35 @@ module.exports = {
             },
             // Verification Role
             {
-              optionId: "verch",
-              optionName: "Verification Channel",
+              optionId: "verole",
+              optionName: "Verification Role",
               optionDescription:
-                "Set or reset the server's verification channel",
+                "Set or reset the server's verification role",
               optionType: DBD.formTypes.rolesSelect(false),
               getActualSet: async ({ guild }) => {
                 let data = await verifySchema
-                  .findOne({ guildId: guild.id })
+                  .findOne({ Guild: guild.id })
                   .catch((err) => {});
-                if (data) return data.channelId;
+                if (data) return data.Channel;
                 else return null;
               },
               setNew: async ({ guild, newData }) => {
                 let data = await verifySchema
-                  .findOne({ guildId: guild.id })
+                  .findOne({ Guild: guild.id })
                   .catch((err) => {});
 
                 if (!newData) newData = null;
 
                 if (!data) {
                   data = new verifySchema({
-                    guildId: guild.id,
-                    channelId: null,
-                    roleId: newData,
+                    Guild: guild.id,
+                    Channel: null,
+                    Role: newData,
                   });
 
                   await data.save();
                 } else {
-                  data.roleId = newData;
+                  data.Role = newData;
                   await data.save();
                 }
                 return;
