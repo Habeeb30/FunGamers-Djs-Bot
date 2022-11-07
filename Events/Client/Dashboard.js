@@ -6,6 +6,7 @@ const joinSchema = require("../../Schemas/joinSchema");
 const GeneralLogsDB = require("../../Schemas/LogsChannel");
 const LogsSwitchDB = require("../../Schemas/GeneralLogs");
 const AI = require("../../Schemas/AIChat");
+const verifySchema = require("../../Schemas/verifySchema");
 
 module.exports = {
   name: "ready",
@@ -846,6 +847,91 @@ module.exports = {
                   await data.save();
                 } else {
                   data.Channel = newData;
+                  await data.save();
+                }
+                return;
+              },
+            },
+          ],
+        },
+
+        // Verification System
+
+        {
+          categoryId: "verify",
+          categoryName: "Verification System",
+          categoryDescription: "Setup the verification channel & role",
+          categoryOptionsList: [
+            // Verification Channel
+            {
+              optionId: "verch",
+              optionName: "Verification Channel",
+              optionDescription:
+                "Set or reset the server's verification channel",
+              optionType: DBD.formTypes.channelsSelect(
+                false,
+                (ChannelTypes = [ChannelType.GuildText])
+              ),
+              getActualSet: async ({ guild }) => {
+                let data = await verifySchema
+                  .findOne({ guildId: guild.id })
+                  .catch((err) => {});
+                if (data) return data.channelId;
+                else return null;
+              },
+              setNew: async ({ guild, newData }) => {
+                let data = await verifySchema
+                  .findOne({ guildId: guild.id })
+                  .catch((err) => {});
+
+                if (!newData) newData = null;
+
+                if (!data) {
+                  data = new verifySchema({
+                    guildId: guild.id,
+                    channelId: newData,
+                    roleId: null,
+                  });
+
+                  await data.save();
+                } else {
+                  data.channelId = newData;
+                  await data.save();
+                }
+                return;
+              },
+            },
+            // Verification Role
+            {
+              optionId: "verch",
+              optionName: "Verification Channel",
+              optionDescription:
+                "Set or reset the server's verification channel",
+              optionType: DBD.formTypes.rolesSelect(false),
+              getActualSet: async ({ guild }) => {
+                let data = await verifySchema
+                  .findOne({ guildId: guild.id })
+                  .catch((err) => {});
+                if (data) return data.channelId;
+                else return null;
+              },
+              setNew: async ({ guild, newData }) => {
+                let data = await verifySchema
+                  .findOne({ guildId: guild.id })
+                  .catch((err) => {});
+
+                if (!newData) newData = null;
+
+                if (!data) {
+                  data = new verifySchema({
+                    guildId: guild.id,
+                    channelId: null,
+                    roleId: newData,
+                  });
+
+                  await data.save();
+                } else {
+                  data.roleId = newData;
                   await data.save();
                 }
                 return;
