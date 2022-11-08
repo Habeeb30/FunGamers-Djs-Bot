@@ -79,7 +79,7 @@ module.exports = {
 
           if (
             interaction.member.roles.cache.some(
-              (role) => role.id === verifyRoleId.roleId
+              (role) => role.id === verifyRoleId.Role
             )
           ) {
             interaction.reply({
@@ -127,7 +127,7 @@ module.exports = {
               .getTextInputValue("veryUserInput")
               .toUpperCase() === randomToken
           ) {
-            const role = interaction.guild.roles.cache.get(verifyRoleId.roleId);
+            const role = interaction.guild.roles.cache.get(verifyRoleId.Role);
 
             if (!role)
               return interaction.reply({
