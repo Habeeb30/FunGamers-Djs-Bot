@@ -20,6 +20,8 @@ module.exports = {
    * @param {CommandInteraction} interaction
    */
   async execute(interaction, client) {
+    const { guild } = interaction;
+
     const Data = await verifySchema
       .findOne({ Guild: guild.id })
       .catch((err) => {});
