@@ -9,67 +9,72 @@ const {
   TextInputBuilder,
   ModalBuilder,
 } = require("discord.js");
-const verifySchema = require("../../Schemas/verifySchema");
+const roleSchema = require("../../Schemas/verifyRoleId");
+
 const randomString = require("randomized-string");
 
 module.exports = {
   name: "interactionCreate",
 
   /**
-   * @param { Client } client
+   *
+   * @param {Client} client
    * @param {CommandInteraction} interaction
    */
   async execute(interaction, client) {
-    const { guild } = interaction;
+    if (interaction.isChatInputCommand()) {
+      switch (interaction.commandName) {
+        case "setup-verification":
+          const channel = interaction.options.getChannel("channel");
+          const description =
+            interaction.options.getString("description") ||
+            "Welcome to the server! Please authorize yourself by clicking the button below! When you verify you will be granted the 'verified' role";
+          const title =
+            interaction.options.getString("title") ||
+            `Welcome to ${interaction.guild.name}!`;
 
-    const Data = await verifySchema
-      .findOne({ Guild: guild.id })
-      .catch((err) => {});
-    if (!Data) return;
+          const embed = new EmbedBuilder()
+            .setThumbnail(
+              "https://emoji.discord.st/emojis/5045414d-7cd4-4024-ac6b-809e920fcf9d.gif"
+            )
+            .setDescription(description)
+            .setColor("fcd303")
+            .setImage(
+              "https://verif-y.com/wp-content/uploads/2020/07/Verif-y-logo.png"
+            )
+            .setFooter({
+              text: "The System by FunGamers",
+              iconURL:
+                "https://images-ext-1.discordapp.net/external/7zIa8B9n45knyj9tq5LWfjMSr2qjJFLezMseGZu5tos/https/emoji.discord.st/emojis/96586e0c-0d0c-4915-bab4-c5e9cd3fdec3.gif",
+            })
+            .setTitle(title);
 
-    if (Data.Channel !== null) {
-      const Channel = guild.channels.cache.get(Data.Channel);
-      if (!Channel) return;
+          const button = new ActionRowBuilder().setComponents(
+            new ButtonBuilder()
+              .setCustomId("verifyMember")
+              .setLabel("Verify")
+              .setStyle(ButtonStyle.Success)
+              .setEmoji("<:dev_yes:999673591341797416>")
+          );
 
-      const embed = new EmbedBuilder()
-        .setThumbnail(
-          "https://emoji.discord.st/emojis/5045414d-7cd4-4024-ac6b-809e920fcf9d.gif"
-        )
-        .setDescription(
-          "Welcome to the server! Please authorize yourself by clicking the button below! When you verify you will be granted the 'verified' role"
-        )
-        .setColor(client.color)
-        .setImage(
-          "https://verif-y.com/wp-content/uploads/2020/07/Verif-y-logo.png"
-        )
-        .setFooter({
-          text: "The System by FunGamers",
-          iconURL:
-            "https://images-ext-1.discordapp.net/external/7zIa8B9n45knyj9tq5LWfjMSr2qjJFLezMseGZu5tos/https/emoji.discord.st/emojis/96586e0c-0d0c-4915-bab4-c5e9cd3fdec3.gif",
-        })
-        .setTitle(`Welcome to ${interaction.guild.name}!`);
+          channel.send({
+            embeds: [embed],
+            components: [button],
+          });
 
-      const button = new ActionRowBuilder().setComponents(
-        new ButtonBuilder()
-          .setCustomId("verifyMember")
-          .setLabel("Verify")
-          .setStyle(ButtonStyle.Success)
-          .setEmoji("<:dev_yes:999673591341797416>")
-      );
-      Channel.send({ embeds: [embed], components: [button] });
-    }
-
-    if (interaction.isButton()) {
+          break;
+      }
+    } else if (interaction.isButton()) {
       switch (interaction.customId) {
         case "verifyMember": {
-          const verifyRoleId = await verifySchema
-            .findOne({ Guild: guild.id })
-            .catch((err) => {});
+          const verifyRoleId = await roleSchema.findOne({
+            guildId: interaction.guild.id,
+          });
 
           if (!verifyRoleId) {
             interaction.reply({
               content:
-                "You have not set a verification role yet! Set it in Dashboard",
+                "You have not set a verification role yet! Use `/setrole` to set one!",
               ephemeral: true,
             });
             return;
@@ -81,7 +86,7 @@ module.exports = {
 
           if (
             interaction.member.roles.cache.some(
-              (role) => role.id === verifyRoleId.Role
+              (role) => role.id === verifyRoleId.roleId
             )
           ) {
             interaction.reply({
@@ -90,7 +95,7 @@ module.exports = {
                   .setDescription(
                     "You have already verified that you are a not robot!"
                   )
-                  .setColor(client.color),
+                  .setColor("Blue"),
               ],
               ephemeral: true,
             });
@@ -129,7 +134,7 @@ module.exports = {
               .getTextInputValue("veryUserInput")
               .toUpperCase() === randomToken
           ) {
-            const role = interaction.guild.roles.cache.get(verifyRoleId.Role);
+            const role = interaction.guild.roles.cache.get(verifyRoleId.roleId);
 
             if (!role)
               return interaction.reply({
@@ -145,7 +150,7 @@ module.exports = {
                       .setDescription(
                         `You have been verified and have been given the ${role.name} role!`
                       )
-                      .setColor(client.color),
+                      .setColor("Green"),
                   ],
                   ephemeral: true,
                 })
