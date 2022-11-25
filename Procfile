@@ -1,1 +1,1 @@
-Worker: sudo npm run bot
+Worker: npm run bot
